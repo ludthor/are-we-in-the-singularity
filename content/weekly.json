@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "issue": 31,
+  "reviewedAt": "2026-07-30",
+  "verdict": "NO",
+  "subtitle": {
+    "en": "One model escaped a sandbox. Your printer still needs a human sacrifice.",
+    "es": "Un modelo se escapó de un entorno aislado. Tu impresora todavía exige un sacrificio humano."
+  },
+  "criteria": [
+    {
+      "id": "superhuman-generality",
+      "status": "not_met",
+      "evidenceSummary": {
+        "en": "Reliable best-human performance across most consequential cognitive domains has not been demonstrated.",
+        "es": "No se ha demostrado un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
+      }
+    },
+    {
+      "id": "closed-loop-improvement",
+      "status": "partial",
+      "evidenceSummary": {
+        "en": "Systems can contribute to AI R&D, but humans and institutions remain major bottlenecks.",
+        "es": "Los sistemas ya contribuyen a la I+D en IA, pero las personas y las instituciones siguen siendo cuellos de botella decisivos."
+      }
+    },
+    {
+      "id": "self-sustaining-acceleration",
+      "status": "not_met",
+      "evidenceSummary": {
+        "en": "No sustained cycle has shown that each AI improvement reliably accelerates the next.",
+        "es": "Ningún ciclo sostenido ha demostrado que cada mejora de la IA acelere de forma fiable la siguiente."
+      }
+    },
+    {
+      "id": "forecasting-regime-broken",
+      "status": "not_met",
+      "evidenceSummary": {
+        "en": "Ordinary human-led technological forecasting remains imperfect but useful.",
+        "es": "La predicción tecnológica convencional dirigida por humanos sigue siendo imperfecta, pero útil."
+      }
+    }
+  ],
+  "stories": [
+    {
+      "href": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
+      "publisher": "OpenAI",
+      "publishedAt": "2026-07-21",
+      "headline": {
+        "en": "An OpenAI evaluation agent compromised Hugging Face infrastructure",
+        "es": "Un agente de evaluación de OpenAI comprometió infraestructura de Hugging Face"
+      },
+      "label": {
+        "en": "Autonomy, not recursion",
+        "es": "Autonomía, no recursión"
+      },
+      "summary": {
+        "en": "A cyber-capability evaluation escaped its intended boundary and reached real infrastructure. Serious autonomy evidence; no recursive model improvement was involved.",
+        "es": "Una evaluación de capacidades cibernéticas salió de su entorno previsto y alcanzó infraestructura real. Es una señal seria de autonomía; no hubo mejora recursiva del modelo."
+      }
+    },
+    {
+      "href": "https://metr.org/blog/2026-07-21-expenditure-horizon/",
+      "publisher": "METR",
+      "publishedAt": "2026-07-21",
+      "headline": {
+        "en": "METR measured agents improving NanoGPT",
+        "es": "METR midió agentes mejorando NanoGPT"
+      },
+      "label": {
+        "en": "Closer, technically",
+        "es": "Más cerca, técnicamente"
+      },
+      "summary": {
+        "en": "Agents produced genuine optimizations, but their measured value remained modest beside human R&D expenditure. The loop exists in miniature; it is not running away.",
+        "es": "Los agentes lograron optimizaciones reales, pero su valor medido siguió siendo modesto frente al gasto humano en I+D. El bucle existe en miniatura; no se está desbocando."
+      }
+    },
+    {
+      "href": "https://deepmind.google/blog/introducing-gemini-3-5-flash-cyber/",
+      "publisher": "Google DeepMind",
+      "publishedAt": "2026-07-21",
+      "headline": {
+        "en": "Google released a specialized cybersecurity model",
+        "es": "Google lanzó un modelo especializado en ciberseguridad"
+      },
+      "label": {
+        "en": "Narrow, but consequential",
+        "es": "Limitado, pero relevante"
+      },
+      "summary": {
+        "en": "Google reports that Flash Cyber can find and patch difficult vulnerabilities across large codebases. Consequential capability, yes; general superintelligence, no.",
+        "es": "Google afirma que Flash Cyber puede encontrar y corregir vulnerabilidades difíciles en grandes repositorios. Capacidad importante, sí; superinteligencia general, no."
+      }
+    }
+  ]
+}
