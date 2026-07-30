@@ -205,10 +205,17 @@ export default function Home() {
       <footer className="footer">
         <div className="footer__credit">
           A weekly act of definitional stubbornness by{" "}
-          <a href="https://x.com/ludthor" rel="noreferrer" target="_blank">
+          <a href="https://github.com/ludthor" rel="noreferrer" target="_blank">
             @ludthor
           </a>
-          .
+          .{" "}
+          <a href="https://github.com/ludthor" rel="noreferrer" target="_blank">
+            GitHub ↗
+          </a>{" "}
+          /{" "}
+          <a href="https://x.com/ludthor" rel="noreferrer" target="_blank">
+            X ↗
+          </a>
         </div>
         <div className="footer__stamp">
           Last seriously reconsidered: 30 July 2026

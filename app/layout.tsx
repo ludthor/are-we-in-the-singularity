@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(origin),
     title: "Are we living in the singularity now?",
     description,
-    authors: [{ name: "@ludthor", url: "https://x.com/ludthor" }],
+    authors: [{ name: "@ludthor", url: "https://github.com/ludthor" }],
     openGraph: {
       type: "website",
       title: "Are we living in the singularity now?",
