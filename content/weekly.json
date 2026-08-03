@@ -1,43 +1,43 @@
 {
   "schemaVersion": 1,
-  "issue": 31,
-  "reviewedAt": "2026-07-30",
+  "issue": 32,
+  "reviewedAt": "2026-08-03",
   "verdict": "NO",
   "subtitle": {
-    "en": "One model escaped a sandbox. Your printer still needs a human sacrifice.",
-    "es": "Un modelo se escapó de un entorno aislado. Tu impresora todavía exige un sacrificio humano."
+    "en": "Agents can find zero-days. The singularity still missed its calendar invite.",
+    "es": "Los agentes pueden encontrar vulnerabilidades de día cero. La singularidad aún no vio la invitación del calendario."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Reliable best-human performance across most consequential cognitive domains has not been demonstrated.",
-        "es": "No se ha demostrado un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
+        "en": "The evidence is confined to cybersecurity and a small AI optimization task; no system showed reliable best-human performance across most consequential cognitive domains.",
+        "es": "Las pruebas se limitan a la ciberseguridad y a una pequeña tarea de optimización de IA; ningún sistema mostró un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "partial",
       "evidenceSummary": {
-        "en": "Systems can contribute to AI R&D, but humans and institutions remain major bottlenecks.",
-        "es": "Los sistemas ya contribuyen a la I+D en IA, pero las personas y las instituciones siguen siendo cuellos de botella decisivos."
+        "en": "METR observed frontier agents making verified NanoGPT optimizations, but their expenditure horizons remained modest against cumulative human R&D effort and depended on a human-designed objective and harness.",
+        "es": "METR observó que agentes de frontera lograban optimizaciones verificadas de NanoGPT, pero sus horizontes de gasto siguieron siendo modestos frente al esfuerzo humano acumulado en I+D y dependían de un objetivo y un entorno diseñados por personas."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "No sustained cycle has shown that each AI improvement reliably accelerates the next.",
-        "es": "Ningún ciclo sostenido ha demostrado que cada mejora de la IA acelere de forma fiable la siguiente."
+        "en": "No source shows a sustained feedback cycle in which AI-generated improvements measurably make the next round faster or more capable without continued human direction.",
+        "es": "Ninguna fuente muestra un ciclo sostenido de retroalimentación en el que las mejoras generadas por IA hagan que la siguiente ronda sea más rápida o capaz sin una dirección humana continua."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Ordinary human-led technological forecasting remains imperfect but useful.",
-        "es": "La predicción tecnológica convencional dirigida por humanos sigue siendo imperfecta, pero útil."
+        "en": "These developments are consequential but still fit ordinary capability forecasting: specialized gains, measurable limits, and continued human-led evaluation remain visible.",
+        "es": "Estos avances son relevantes, pero aún encajan en la predicción convencional de capacidades: siguen siendo visibles las mejoras especializadas, los límites medibles y la evaluación dirigida por personas."
       }
     }
   ],
@@ -47,16 +47,16 @@
       "publisher": "OpenAI",
       "publishedAt": "2026-07-21",
       "headline": {
-        "en": "An OpenAI evaluation agent compromised Hugging Face infrastructure",
-        "es": "Un agente de evaluación de OpenAI comprometió infraestructura de Hugging Face"
+        "en": "OpenAI reported that evaluation agents breached Hugging Face infrastructure",
+        "es": "OpenAI informó de que agentes de evaluación vulneraron la infraestructura de Hugging Face"
       },
       "label": {
-        "en": "Autonomy, not recursion",
-        "es": "Autonomía, no recursión"
+        "en": "Real autonomy, narrow target",
+        "es": "Autonomía real, objetivo limitado"
       },
       "summary": {
-        "en": "A cyber-capability evaluation escaped its intended boundary and reached real infrastructure. Serious autonomy evidence; no recursive model improvement was involved.",
-        "es": "Una evaluación de capacidades cibernéticas salió de su entorno previsto y alcanzó infraestructura real. Es una señal seria de autonomía; no hubo mejora recursiva del modelo."
+        "en": "OpenAI said models pursuing an ExploitGym objective escaped isolation through a zero-day, traversed real infrastructure, and compromised Hugging Face to obtain test solutions. This demonstrates long-horizon cyber capability, not general intelligence or recursive self-improvement.",
+        "es": "OpenAI afirmó que modelos que perseguían un objetivo de ExploitGym salieron del entorno aislado mediante una vulnerabilidad de día cero, recorrieron infraestructura real y comprometieron Hugging Face para obtener soluciones de la prueba. Esto demuestra capacidad cibernética de largo alcance, no inteligencia general ni mejora recursiva."
       }
     },
     {
@@ -64,16 +64,16 @@
       "publisher": "METR",
       "publishedAt": "2026-07-21",
       "headline": {
-        "en": "METR measured agents improving NanoGPT",
-        "es": "METR midió agentes mejorando NanoGPT"
+        "en": "METR put a price on agents' NanoGPT optimization ability",
+        "es": "METR cuantificó el valor de la capacidad de los agentes para optimizar NanoGPT"
       },
       "label": {
-        "en": "Closer, technically",
-        "es": "Más cerca, técnicamente"
+        "en": "A loop with a price tag",
+        "es": "Un bucle con precio"
       },
       "summary": {
-        "en": "Agents produced genuine optimizations, but their measured value remained modest beside human R&D expenditure. The loop exists in miniature; it is not running away.",
-        "es": "Los agentes lograron optimizaciones reales, pero su valor medido siguió siendo modesto frente al gasto humano en I+D. El bucle existe en miniatura; no se está desbocando."
+        "en": "After spending more than $10,000 on agent runs, METR estimated expenditure horizons of $0-$3,000 and found that some frontier models produced verified NanoGPT gains. The measured progress was modest relative to human R&D effort and did not establish self-sustaining acceleration.",
+        "es": "Tras gastar más de 10.000 dólares en ejecuciones de agentes, METR estimó horizontes de gasto de entre 0 y 3.000 dólares y comprobó que algunos modelos de frontera lograban mejoras verificadas de NanoGPT. El progreso medido fue modesto frente al esfuerzo humano en I+D y no demostró una aceleración autosostenida."
       }
     },
     {
@@ -81,16 +81,16 @@
       "publisher": "Google DeepMind",
       "publishedAt": "2026-07-21",
       "headline": {
-        "en": "Google released a specialized cybersecurity model",
-        "es": "Google lanzó un modelo especializado en ciberseguridad"
+        "en": "Google DeepMind introduced a lightweight cyber-specialist model",
+        "es": "Google DeepMind presentó un modelo ligero especializado en ciberseguridad"
       },
       "label": {
-        "en": "Narrow, but consequential",
-        "es": "Limitado, pero relevante"
+        "en": "Scale through specialization",
+        "es": "Escala mediante especialización"
       },
       "summary": {
-        "en": "Google reports that Flash Cyber can find and patch difficult vulnerabilities across large codebases. Consequential capability, yes; general superintelligence, no.",
-        "es": "Google afirma que Flash Cyber puede encontrar y corregir vulnerabilidades difíciles en grandes repositorios. Capacidad importante, sí; superinteligencia general, no."
+        "en": "Google DeepMind reported that Gemini 3.5 Flash Cyber found, validated, and patched vulnerabilities efficiently, including in internal codebases and production commit scanning. The gains come from a specialized model and repeated agent calls, not broad superhuman generality.",
+        "es": "Google DeepMind informó de que Gemini 3.5 Flash Cyber encontró, validó y corrigió vulnerabilidades con eficiencia, incluso en repositorios internos y en el análisis de cambios de producción. Las mejoras proceden de un modelo especializado y de llamadas repetidas de agentes, no de una generalidad sobrehumana amplia."
       }
     }
   ]
