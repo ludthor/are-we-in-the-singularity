@@ -1,0 +1,493 @@
+name: Weekly Singularity dossier
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Run even when another weekly-review draft is open
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    - cron: "17 9 * * 1"
+      timezone: "Europe/Madrid"
+    - cron: "47 15 * * 1"
+      timezone: "Europe/Madrid"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-singularity-dossier
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    name: Decide whether a proposal is needed
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      branch: ${{ steps.check.outputs.branch }}
+      existing_pr: ${{ steps.check.outputs.existing_pr }}
+      review_date: ${{ steps.check.outputs.review_date }}
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Check for an existing weekly draft
+        id: check
+        uses: actions/github-script@v7
+        env:
+          FORCE_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.force || false }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const dateParts = new Intl.DateTimeFormat("en-CA", {
+              timeZone: "Europe/Madrid",
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            }).formatToParts(new Date());
+            const values = Object.fromEntries(
+              dateParts.filter(({ type }) => type !== "literal").map(({ type, value }) => [type, value]),
+            );
+            const reviewDate = `${values.year}-${values.month}-${values.day}`;
+            const pulls = await github.paginate(github.rest.pulls.list, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              per_page: 100,
+            });
+            const existing = pulls.find(({ head }) =>
+              /^automation\/weekly-\d{4}-\d{2}-\d{2}$/.test(head.ref),
+            );
+            const force = process.env.FORCE_RUN === "true";
+            core.setOutput("review_date", reviewDate);
+            core.setOutput("branch", `automation/weekly-${reviewDate}`);
+            core.setOutput("existing_pr", existing?.html_url ?? "");
+            core.setOutput("should_run", force || !existing ? "true" : "false");
+            if (existing && !force) {
+              core.notice(`Skipping because ${existing.html_url} is already open.`);
+            }
+
+  propose:
+    name: Research and validate the dossier
+    needs: preflight
+    if: needs.preflight.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: read
+    outputs:
+      failure_detail: ${{ steps.result.outputs.failure_detail }}
+      failure_stage: ${{ steps.result.outputs.failure_stage }}
+      final_message: ${{ steps.codex.outputs['final-message'] }}
+    steps:
+      - name: Check out approved main without write credentials
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Use the repository Node.js version
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.13.0"
+          cache: npm
+
+      - name: Install committed dependencies
+        id: npm_ci
+        continue-on-error: true
+        run: npm ci
+
+      - name: Confirm the OpenAI secret is configured
+        id: secret
+        if: steps.npm_ci.outcome == 'success'
+        continue-on-error: true
+        env:
+          HAS_OPENAI_KEY: ${{ secrets.OPENAI_API_KEY != '' }}
+        run: |
+          if [ "$HAS_OPENAI_KEY" != "true" ]; then
+            echo "OPENAI_API_KEY is missing from repository Actions secrets." >&2
+            exit 1
+          fi
+
+      - name: Preserve the approved baseline
+        id: baseline
+        if: steps.secret.outcome == 'success'
+        continue-on-error: true
+        env:
+          PREVIOUS_WEEKLY: ${{ runner.temp }}/weekly.previous.json
+        run: cp content/weekly.json "$PREVIOUS_WEEKLY"
+
+      - name: Prepare the single-file Codex permission profile
+        id: codex_config
+        if: steps.baseline.outcome == 'success'
+        continue-on-error: true
+        env:
+          CODEX_HOME_DIR: ${{ runner.temp }}/codex-home
+        run: |
+          mkdir -p "$CODEX_HOME_DIR"
+          cp .github/codex/config.toml "$CODEX_HOME_DIR/config.toml"
+
+      - name: Run the bounded Codex editor
+        id: codex
+        if: steps.codex_config.outcome == 'success'
+        continue-on-error: true
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/prompts/weekly-dossier.md
+          codex-home: ${{ runner.temp }}/codex-home
+          permission-profile: weekly-editor
+          safety-strategy: drop-sudo
+          codex-args: '["--search", "--ephemeral", "--strict-config"]'
+          allow-users: ludthor
+
+      - name: Enforce the content-only change boundary
+        id: scope
+        if: steps.codex.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import { execFileSync } from "node:child_process";
+          const status = execFileSync(
+            "git",
+            ["status", "--porcelain=v1", "--untracked-files=all"],
+            { encoding: "utf8" },
+          );
+          const entries = status.split("\n").filter(Boolean);
+          if (
+            entries.length !== 1 ||
+            !/^(?: M|M |MM|A |AM|\?\?) content\/weekly\.json$/.test(entries[0])
+          ) {
+            console.error("Expected exactly one changed path: content/weekly.json");
+            console.error(status || "No files changed.");
+            process.exit(1);
+          }
+          execFileSync("git", ["diff", "--check"], { stdio: "inherit" });
+          NODE
+
+      - name: Compare freshness, novelty, and carryovers
+        id: proposal
+        if: steps.scope.outcome == 'success'
+        continue-on-error: true
+        env:
+          METADATA: ${{ runner.temp }}/weekly-metadata.json
+          PREVIOUS_WEEKLY: ${{ runner.temp }}/weekly.previous.json
+          PR_BODY: ${{ runner.temp }}/weekly-pr-body.md
+          REVIEW_DATE: ${{ needs.preflight.outputs.review_date }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          node automation/validate-weekly-proposal.mjs \
+            --previous "$PREVIOUS_WEEKLY" \
+            --current content/weekly.json \
+            --review-date "$REVIEW_DATE" \
+            --metadata "$METADATA" \
+            --pr-body "$PR_BODY" \
+            --run-url "$RUN_URL"
+
+      - name: Validate weekly content
+        id: content
+        if: steps.proposal.outcome == 'success'
+        continue-on-error: true
+        run: npm run content:validate
+
+      - name: Build and test both languages
+        id: tests
+        if: steps.content.outcome == 'success'
+        continue-on-error: true
+        run: npm test
+
+      - name: Package the validated proposal
+        id: package
+        if: steps.tests.outcome == 'success'
+        continue-on-error: true
+        env:
+          ARTIFACT_DIR: ${{ runner.temp }}/weekly-artifact
+          METADATA: ${{ runner.temp }}/weekly-metadata.json
+          PR_BODY: ${{ runner.temp }}/weekly-pr-body.md
+        run: |
+          mkdir -p "$ARTIFACT_DIR/content"
+          cp content/weekly.json "$ARTIFACT_DIR/content/weekly.json"
+          cp "$METADATA" "$ARTIFACT_DIR/weekly-metadata.json"
+          cp "$PR_BODY" "$ARTIFACT_DIR/weekly-pr-body.md"
+
+      - name: Upload the validated proposal
+        id: artifact
+        if: steps.package.outcome == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-proposal-${{ github.run_id }}
+          path: ${{ runner.temp }}/weekly-artifact
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Record the final gate result
+        id: result
+        if: always()
+        run: |
+          stage="success"
+          detail="All proposal gates passed."
+          if [ "${{ steps.npm_ci.outcome }}" != "success" ]; then
+            stage="npm-ci"
+            detail="npm ci failed; research and editing did not run."
+          elif [ "${{ steps.secret.outcome }}" != "success" ]; then
+            stage="openai-secret"
+            detail="OPENAI_API_KEY is missing or unavailable."
+          elif [ "${{ steps.baseline.outcome }}" != "success" ]; then
+            stage="baseline"
+            detail="The approved content/weekly.json baseline could not be preserved."
+          elif [ "${{ steps.codex_config.outcome }}" != "success" ]; then
+            stage="codex-permissions"
+            detail="The single-file Codex permission profile could not be prepared."
+          elif [ "${{ steps.codex.outcome }}" != "success" ]; then
+            stage="codex"
+            detail="The Codex research/editor action failed."
+          elif [ "${{ steps.scope.outcome }}" != "success" ]; then
+            stage="scope"
+            detail="Codex did not leave exactly one change to content/weekly.json."
+          elif [ "${{ steps.proposal.outcome }}" != "success" ]; then
+            stage="freshness"
+            detail="The proposal failed issue, date, novelty, carryover, or source-age checks."
+          elif [ "${{ steps.content.outcome }}" != "success" ]; then
+            stage="content-validation"
+            detail="npm run content:validate failed."
+          elif [ "${{ steps.tests.outcome }}" != "success" ]; then
+            stage="tests"
+            detail="npm test failed."
+          elif [ "${{ steps.package.outcome }}" != "success" ] || [ "${{ steps.artifact.outcome }}" != "success" ]; then
+            stage="artifact"
+            detail="The validated proposal artifact could not be created."
+          fi
+          echo "failure_stage=$stage" >> "$GITHUB_OUTPUT"
+          echo "failure_detail=$detail" >> "$GITHUB_OUTPUT"
+          if [ "$stage" != "success" ]; then
+            echo "$detail" >&2
+            exit 1
+          fi
+
+  publish:
+    name: Publish the draft pull request
+    needs: [preflight, propose]
+    if: needs.propose.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    outputs:
+      pr_url: ${{ steps.pull_request.outputs.pr_url }}
+    steps:
+      - name: Check out approved main with the ephemeral GitHub token
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Download the validated proposal
+        uses: actions/download-artifact@v4
+        with:
+          name: weekly-proposal-${{ github.run_id }}
+          path: ${{ runner.temp }}/weekly-artifact
+
+      - name: Revalidate the artifact against current main
+        env:
+          ARTIFACT_DIR: ${{ runner.temp }}/weekly-artifact
+          REVIEW_DATE: ${{ needs.preflight.outputs.review_date }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          node automation/validate-weekly-proposal.mjs \
+            --previous content/weekly.json \
+            --current "$ARTIFACT_DIR/content/weekly.json" \
+            --review-date "$REVIEW_DATE" \
+            --metadata "$RUNNER_TEMP/revalidated-metadata.json" \
+            --pr-body "$RUNNER_TEMP/revalidated-pr-body.md" \
+            --run-url "$RUN_URL"
+          cmp "$ARTIFACT_DIR/weekly-metadata.json" "$RUNNER_TEMP/revalidated-metadata.json"
+          cmp "$ARTIFACT_DIR/weekly-pr-body.md" "$RUNNER_TEMP/revalidated-pr-body.md"
+
+      - name: Commit and push the automation branch
+        env:
+          ARTIFACT_DIR: ${{ runner.temp }}/weekly-artifact
+          BRANCH: ${{ needs.preflight.outputs.branch }}
+          REVIEW_DATE: ${{ needs.preflight.outputs.review_date }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          base_sha="$(git rev-parse HEAD)"
+          git fetch origin "refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" || true
+          git switch -C "$BRANCH" "$base_sha"
+          cp "$ARTIFACT_DIR/content/weekly.json" content/weekly.json
+          changed_paths="$(git diff --name-only)"
+          if [ "$changed_paths" != "content/weekly.json" ]; then
+            echo "Expected only content/weekly.json, found: $changed_paths" >&2
+            exit 1
+          fi
+          git diff --check
+          git add content/weekly.json
+          git commit -m "Propose weekly review $REVIEW_DATE"
+          git push --force-with-lease origin "HEAD:refs/heads/$BRANCH"
+
+      - name: Open or refresh the draft pull request
+        id: pull_request
+        env:
+          ARTIFACT_DIR: ${{ runner.temp }}/weekly-artifact
+          BRANCH: ${{ needs.preflight.outputs.branch }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="$(node -p "JSON.parse(require('fs').readFileSync(process.argv[1], 'utf8')).title" "$ARTIFACT_DIR/weekly-metadata.json")"
+          existing="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" \
+              --title "$title" \
+              --body-file "$ARTIFACT_DIR/weekly-pr-body.md"
+            if [ "$(gh pr view "$existing" --json isDraft --jq .isDraft)" != "true" ]; then
+              gh pr ready "$existing" --undo
+            fi
+            pr_url="$(gh pr view "$existing" --json url --jq .url)"
+          else
+            pr_url="$(gh pr create \
+              --draft \
+              --base main \
+              --head "$BRANCH" \
+              --title "$title" \
+              --body-file "$ARTIFACT_DIR/weekly-pr-body.md")"
+          fi
+          gh pr edit "$pr_url" --add-label weekly-review --add-reviewer ludthor
+          echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
+
+      - name: Close the standing failure issue after success
+        continue-on-error: true
+        uses: actions/github-script@v7
+        env:
+          PR_URL: ${{ steps.pull_request.outputs.pr_url }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const title = "[automation] Weekly dossier failure";
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              per_page: 100,
+            });
+            const issue = issues.find((candidate) =>
+              !candidate.pull_request && candidate.title === title,
+            );
+            if (issue) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: `Recovered successfully: ${process.env.PR_URL}`,
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: "closed",
+              });
+            }
+
+  report-failure:
+    name: Signal a failed weekly run
+    needs: [preflight, propose, publish]
+    if: >-
+      always() &&
+      (needs.preflight.result == 'failure' ||
+       (needs.preflight.outputs.should_run == 'true' &&
+        (needs.propose.result == 'failure' || needs.publish.result == 'failure')))
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create or refresh the assigned failure issue
+        uses: actions/github-script@v7
+        env:
+          CODEX_FINAL_MESSAGE: ${{ needs.propose.outputs.final_message }}
+          FAILURE_DETAIL: ${{ needs.propose.outputs.failure_detail }}
+          FAILURE_STAGE: ${{ needs.propose.outputs.failure_stage }}
+          PREFLIGHT_RESULT: ${{ needs.preflight.result }}
+          PROPOSE_RESULT: ${{ needs.propose.result }}
+          PUBLISH_RESULT: ${{ needs.publish.result }}
+          REVIEW_DATE: ${{ needs.preflight.outputs.review_date }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const title = "[automation] Weekly dossier failure";
+            const sanitize = (value, limit = 6000) => String(value || "")
+              .replace(/\u001b\[[0-9;]*m/g, "")
+              .replace(/\b(?:sk|gh[opusr])_[A-Za-z0-9_-]{12,}\b/g, "[redacted credential]")
+              .replace(/\/(?:home\/runner|Users)\/[^\s]+/g, "[redacted local path]")
+              .replace(/@/g, "@\u200b")
+              .slice(0, limit);
+            const stage = sanitize(
+              process.env.FAILURE_STAGE ||
+              (process.env.PREFLIGHT_RESULT === "failure" ? "preflight" : "publish"),
+              100,
+            );
+            const detail = sanitize(
+              process.env.FAILURE_DETAIL || "See the failed job logs for the exact error.",
+              1000,
+            );
+            const codexMessage = sanitize(process.env.CODEX_FINAL_MESSAGE);
+            const indentedMessage = codexMessage
+              ? codexMessage.split("\n").map((line) => `    ${line}`).join("\n")
+              : "    No Codex final report was available.";
+            const body = [
+              "## Weekly dossier automation failed",
+              "",
+              `- Review date: ${sanitize(process.env.REVIEW_DATE || "unavailable", 40)}`,
+              `- Failed stage: \`${stage}\``,
+              `- Detail: ${detail}`,
+              `- Preflight: \`${process.env.PREFLIGHT_RESULT}\``,
+              `- Proposal: \`${process.env.PROPOSE_RESULT}\``,
+              `- Publishing: \`${process.env.PUBLISH_RESULT}\``,
+              `- Run: ${process.env.RUN_URL}`,
+              "",
+              "### Codex report",
+              "",
+              indentedMessage,
+              "",
+              "No pull request was merged or deployed. Inspect the linked run before retrying.",
+            ].join("\n");
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "all",
+              per_page: 100,
+            });
+            const existing = issues.find((candidate) =>
+              !candidate.pull_request && candidate.title === title,
+            );
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body,
+                assignees: ["ludthor"],
+                labels: ["bug"],
+                state: "open",
+              });
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: `Another weekly run failed at \`${stage}\`: ${process.env.RUN_URL}`,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                assignees: ["ludthor"],
+                labels: ["bug"],
+              });
+            }
