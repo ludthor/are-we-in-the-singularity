@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: Check for an existing weekly draft
         id: check
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           FORCE_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.force || false }}
         with:
@@ -91,7 +91,7 @@ jobs:
           persist-credentials: false
 
       - name: Use the repository Node.js version
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "22.13.0"
           cache: npm
@@ -142,7 +142,7 @@ jobs:
           codex-home: ${{ runner.temp }}/codex-home
           permission-profile: weekly-editor
           safety-strategy: drop-sudo
-          codex-args: '["--search", "--ephemeral", "--strict-config"]'
+          codex-args: '["--ephemeral", "--strict-config"]'
           allow-users: ludthor
 
       - name: Enforce the content-only change boundary
@@ -362,7 +362,7 @@ jobs:
 
       - name: Close the standing failure issue after success
         continue-on-error: true
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           PR_URL: ${{ steps.pull_request.outputs.pr_url }}
         with:
@@ -406,7 +406,7 @@ jobs:
       issues: write
     steps:
       - name: Create or refresh the assigned failure issue
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           CODEX_FINAL_MESSAGE: ${{ needs.propose.outputs.final_message }}
           FAILURE_DETAIL: ${{ needs.propose.outputs.failure_detail }}

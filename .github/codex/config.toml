@@ -1,3 +1,5 @@
+web_search = "live"
+
 [permissions.weekly-editor]
 description = "Read the repository and edit only the weekly dossier."
 extends = ":read-only"
