@@ -1,0 +1,10 @@
+[permissions.weekly-editor]
+description = "Read the repository and edit only the weekly dossier."
+extends = ":read-only"
+
+[permissions.weekly-editor.filesystem]
+glob_scan_max_depth = 4
+
+[permissions.weekly-editor.filesystem.":workspace_roots"]
+"content/weekly.json" = "write"
+"**/*.env" = "deny"

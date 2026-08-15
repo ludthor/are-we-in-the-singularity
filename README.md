@@ -24,24 +24,34 @@ from that file.
 
 ## Weekly review automation
 
-A scheduled Codex project automation runs every Monday morning. Its operating
-contract is checked into `AUTOMATION.md`, so the rules are reviewable alongside
-the code.
+A GitHub Actions workflow runs on hosted infrastructure every Monday morning,
+with a later fallback attempt and a manual trigger. Its operating contract is
+checked into `AUTOMATION.md`, so the rules are reviewable alongside the code.
 
 The workflow:
 
-1. Researches with web access restricted to an explicit primary-source domain
-   allowlist.
-2. Produces one bilingual structured record for the week.
-3. Rejects malformed data, non-HTTPS or non-allowlisted sources, duplicate
+1. Installs the committed dependencies before research, then runs Codex without
+   GitHub write credentials and with write access limited to
+   `content/weekly.json`.
+2. Researches live primary sources from an explicit domain allowlist and
+   requires at least one genuinely new development.
+3. Produces one bilingual structured record for the week.
+4. Rejects malformed data, non-HTTPS or non-allowlisted sources, duplicate
    stories, stale dates, sensitive-looking text, and a `YES` verdict unless all
    four strict criteria are met.
-4. Verifies that all three selected source URLs resolve.
-5. Builds and tests both language routes.
-6. Opens or refreshes a **draft pull request** containing only
+5. Mechanically compares the proposal with the previous approved issue,
+   protects carryover dates and publishers, and builds and tests both language
+   routes.
+6. Uses a separate fixed publishing job to open or refresh a **draft pull
+   request** containing only
    `content/weekly.json`.
+7. Requests human review on success or opens an assigned failure issue with the
+   workflow-run link.
 
 It never deploys or merges. A person must verify the links, dates, translations,
 criteria, and joke before merging.
 
-No API key or other long-lived credential is stored in GitHub.
+The OpenAI API key is stored only as the `OPENAI_API_KEY` Actions repository
+secret and passed directly to the Codex Action. GitHub write access uses the
+workflow run's short-lived `GITHUB_TOKEN`; no personal access token is stored in
+the repository.
