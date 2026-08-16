@@ -31,8 +31,9 @@ checked into `AUTOMATION.md`, so the rules are reviewable alongside the code.
 The workflow:
 
 1. Installs the committed dependencies before research, then runs Codex without
-   GitHub write credentials and with write access limited to
-   `content/weekly.json`.
+   GitHub write credentials. Its proxied command network is restricted to the
+   schema's primary-source domains, and a fixed gate accepts only a
+   `content/weekly.json` change.
 2. Researches live primary sources from an explicit domain allowlist and
    requires at least one genuinely new development.
 3. Produces one bilingual structured record for the week.
@@ -47,6 +48,9 @@ The workflow:
    `content/weekly.json`.
 7. Requests human review on success or opens an assigned failure issue with the
    workflow-run link.
+
+Only a draft for the current review date suppresses a duplicate run. An older
+unmerged weekly draft does not block the next Monday's required proposal.
 
 It never deploys or merges. A person must verify the links, dates, translations,
 criteria, and joke before merging.

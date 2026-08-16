@@ -135,15 +135,15 @@ export function validateWeeklyProposal(previous, proposal, expectedReviewDate) {
 
     const afterPreviousReview =
       parseDate(story.publishedAt) > parseDate(previous.reviewedAt);
+    const duplicateIndex = previous.stories.findIndex((candidate) =>
+      likelySameDevelopment(story, candidate),
+    );
     if (afterPreviousReview) {
       const ageDays =
         (parseDate(proposal.reviewedAt) - parseDate(story.publishedAt)) / DAY_MS;
       assert(
         ageDays <= 7,
         `stories[${index}] cannot count as genuinely new outside the seven-day research window`,
-      );
-      const duplicateIndex = previous.stories.findIndex((candidate) =>
-        likelySameDevelopment(story, candidate),
       );
       assert(
         duplicateIndex === -1,
@@ -153,6 +153,10 @@ export function validateWeeklyProposal(previous, proposal, expectedReviewDate) {
       continue;
     }
 
+    assert(
+      duplicateIndex === -1,
+      `stories[${index}] appears to relabel previous development stories[${duplicateIndex}] as supporting evidence through a new URL`,
+    );
     classifications.push({ index, kind: "supporting", story });
   }
 

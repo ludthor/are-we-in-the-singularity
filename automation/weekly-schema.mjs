@@ -22,7 +22,7 @@ export const ALLOWED_SOURCE_DOMAINS = [
 const STATUS_VALUES = new Set(["not_met", "partial", "met"]);
 const SECRET_PATTERNS = [
   /-----BEGIN [A-Z ]*PRIVATE KEY-----/i,
-  /\b(?:sk|gh[opusr])_[A-Za-z0-9_-]{20,}\b/,
+  /\b(?:sk[-_]|gh[opusr]_)[A-Za-z0-9_-]{20,}\b/,
   /\bAKIA[0-9A-Z]{16}\b/,
   /\/Users\/[^/\s]+/,
   /[A-Z]:\\Users\\/i,

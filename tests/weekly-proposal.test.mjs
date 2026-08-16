@@ -145,6 +145,16 @@ test("rejects an old development republished behind a new URL", () => {
   );
 });
 
+test("rejects a previous development relabeled as older supporting evidence", () => {
+  const { previous, proposal } = validProposal();
+  proposal.stories[1] = structuredClone(previous.stories[1]);
+  proposal.stories[1].href = "https://metr.org/blog/alternate-agent-time-horizon/";
+  assert.throws(
+    () => validateWeeklyProposal(previous, proposal, "2026-08-10"),
+    /relabel previous development.*supporting evidence/,
+  );
+});
+
 test("rejects a nominally new story outside the seven-day research window", () => {
   const { previous, proposal } = validProposal();
   previous.reviewedAt = "2026-07-30";
