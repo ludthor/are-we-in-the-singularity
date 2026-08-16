@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
+
+const DEFAULT_SITE_ORIGIN = "https://singularity-now.pages.dev";
+
+function getSiteOrigin(): string {
+  const configuredOrigin =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_ORIGIN;
+
+  return configuredOrigin.replace(/\/+$/, "");
+}
 
 const metadataCopy = {
   en: {
@@ -29,15 +37,7 @@ const metadataCopy = {
 export async function createLocalizedMetadata(
   locale: keyof typeof metadataCopy,
 ): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host =
-    requestHeaders.get("x-forwarded-host") ??
-    requestHeaders.get("host") ??
-    "localhost:3000";
-  const protocol =
-    requestHeaders.get("x-forwarded-proto") ??
-    (host.startsWith("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
+  const origin = getSiteOrigin();
   const copy = metadataCopy[locale];
 
   return {

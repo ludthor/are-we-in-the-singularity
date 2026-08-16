@@ -113,6 +113,14 @@ test("accepts one new development plus honest carryovers", () => {
     createPullRequestBody(result, "https://github.com/example/actions/runs/1"),
     /Genuinely new/,
   );
+  assert.match(
+    createPullRequestBody(result, "https://github.com/example/actions/runs/1"),
+    /marks it ready, merges it, and deploys the exact merged commit/,
+  );
+  assert.doesNotMatch(
+    createPullRequestBody(result, "https://github.com/example/actions/runs/1"),
+    /explicit human verification|never merges or deploys/,
+  );
 });
 
 test("rejects a proposal with no genuinely new development", () => {

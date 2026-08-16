@@ -2,12 +2,6 @@ name: Weekly Singularity dossier
 
 on:
   workflow_dispatch:
-    inputs:
-      force:
-        description: Run even when this week's weekly-review draft is open
-        required: false
-        default: false
-        type: boolean
   schedule:
     - cron: "17 9 * * 1"
       timezone: "Europe/Madrid"
@@ -34,11 +28,23 @@ jobs:
       review_date: ${{ steps.check.outputs.review_date }}
       should_run: ${{ steps.check.outputs.should_run }}
     steps:
-      - name: Check for an existing weekly draft
+      - name: Confirm release secrets are configured
+        env:
+          HAS_CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+          HAS_CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        run: |
+          if [ "$HAS_CLOUDFLARE_ACCOUNT_ID" != "true" ]; then
+            echo "CLOUDFLARE_ACCOUNT_ID is missing from repository Actions secrets." >&2
+            exit 1
+          fi
+          if [ "$HAS_CLOUDFLARE_API_TOKEN" != "true" ]; then
+            echo "CLOUDFLARE_API_TOKEN is missing from repository Actions secrets." >&2
+            exit 1
+          fi
+
+      - name: Check the published issue and retryable draft
         id: check
         uses: actions/github-script@v8
-        env:
-          FORCE_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.force || false }}
         with:
           github-token: ${{ github.token }}
           script: |
@@ -60,13 +66,30 @@ jobs:
               per_page: 100,
             });
             const existing = pulls.find(({ head }) => head.ref === branch);
-            const force = process.env.FORCE_RUN === "true";
+            const approvedResponse = await github.rest.repos.getContent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: "content/weekly.json",
+              ref: "main",
+            });
+            if (Array.isArray(approvedResponse.data) || !approvedResponse.data.content) {
+              throw new Error("Could not read main:content/weekly.json");
+            }
+            const approved = JSON.parse(
+              Buffer.from(
+                approvedResponse.data.content,
+                approvedResponse.data.encoding,
+              ).toString("utf8"),
+            );
+            const alreadyPublished = approved.reviewedAt === reviewDate;
             core.setOutput("review_date", reviewDate);
             core.setOutput("branch", branch);
             core.setOutput("existing_pr", existing?.html_url ?? "");
-            core.setOutput("should_run", force || !existing ? "true" : "false");
-            if (existing && !force) {
-              core.notice(`Skipping because ${existing.html_url} is already open.`);
+            core.setOutput("should_run", !alreadyPublished ? "true" : "false");
+            if (alreadyPublished) {
+              core.notice(`Skipping because issue ${approved.issue} is already published for ${reviewDate}.`);
+            } else if (existing) {
+              core.notice(`Refreshing retryable audit pull request ${existing.html_url}.`);
             }
 
   propose:
@@ -83,7 +106,7 @@ jobs:
       final_message: ${{ steps.codex.outputs['final-message'] }}
     steps:
       - name: Check out approved main without write credentials
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
@@ -219,7 +242,7 @@ jobs:
         id: artifact
         if: steps.package.outcome == 'success'
         continue-on-error: true
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: weekly-proposal-${{ github.run_id }}
           path: ${{ runner.temp }}/weekly-artifact
@@ -271,7 +294,7 @@ jobs:
           fi
 
   publish:
-    name: Publish the draft pull request
+    name: Publish and merge the audit pull request
     needs: [preflight, propose]
     if: needs.propose.result == 'success'
     runs-on: ubuntu-latest
@@ -281,16 +304,26 @@ jobs:
       issues: write
       pull-requests: write
     outputs:
+      merge_sha: ${{ steps.merge.outputs.merge_sha }}
       pr_url: ${{ steps.pull_request.outputs.pr_url }}
     steps:
       - name: Check out approved main with the ephemeral GitHub token
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
 
+      - name: Use the repository Node.js version
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22.13.0"
+          cache: npm
+
+      - name: Install committed dependencies
+        run: npm ci
+
       - name: Download the validated proposal
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: weekly-proposal-${{ github.run_id }}
           path: ${{ runner.temp }}/weekly-artifact
@@ -311,6 +344,20 @@ jobs:
           cmp "$ARTIFACT_DIR/weekly-metadata.json" "$RUNNER_TEMP/revalidated-metadata.json"
           cmp "$ARTIFACT_DIR/weekly-pr-body.md" "$RUNNER_TEMP/revalidated-pr-body.md"
 
+      - name: Build the release candidate before merge
+        env:
+          ARTIFACT_DIR: ${{ runner.temp }}/weekly-artifact
+        run: |
+          cp "$ARTIFACT_DIR/content/weekly.json" content/weekly.json
+          changed_paths="$(git diff --name-only)"
+          if [ "$changed_paths" != "content/weekly.json" ]; then
+            echo "Expected only content/weekly.json, found: $changed_paths" >&2
+            exit 1
+          fi
+          git diff --check
+          npm run content:validate
+          npm run build:pages
+
       - name: Commit and push the automation branch
         env:
           ARTIFACT_DIR: ${{ runner.temp }}/weekly-artifact
@@ -322,7 +369,6 @@ jobs:
           base_sha="$(git rev-parse HEAD)"
           git fetch origin "refs/heads/$BRANCH:refs/remotes/origin/$BRANCH" || true
           git switch -C "$BRANCH" "$base_sha"
-          cp "$ARTIFACT_DIR/content/weekly.json" content/weekly.json
           changed_paths="$(git diff --name-only)"
           if [ "$changed_paths" != "content/weekly.json" ]; then
             echo "Expected only content/weekly.json, found: $changed_paths" >&2
@@ -358,50 +404,62 @@ jobs:
               --title "$title" \
               --body-file "$ARTIFACT_DIR/weekly-pr-body.md")"
           fi
-          gh pr edit "$pr_url" --add-label weekly-review --add-reviewer ludthor
+          gh pr edit "$pr_url" --add-label weekly-review
           echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
 
-      - name: Close the standing failure issue after success
-        continue-on-error: true
-        uses: actions/github-script@v8
+      - name: Confirm release secrets still exist
         env:
+          HAS_CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+          HAS_CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        run: |
+          test "$HAS_CLOUDFLARE_ACCOUNT_ID" = "true"
+          test "$HAS_CLOUDFLARE_API_TOKEN" = "true"
+
+      - name: Mark ready and merge the validated head
+        id: merge
+        env:
+          GH_TOKEN: ${{ github.token }}
           PR_URL: ${{ steps.pull_request.outputs.pr_url }}
-        with:
-          github-token: ${{ github.token }}
-          script: |
-            const title = "[automation] Weekly dossier failure";
-            const issues = await github.paginate(github.rest.issues.listForRepo, {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: "open",
-              per_page: 100,
-            });
-            const issue = issues.find((candidate) =>
-              !candidate.pull_request && candidate.title === title,
-            );
-            if (issue) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue.number,
-                body: `Recovered successfully: ${process.env.PR_URL}`,
-              });
-              await github.rest.issues.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue.number,
-                state: "closed",
-              });
-            }
+          REVIEW_DATE: ${{ needs.preflight.outputs.review_date }}
+        run: |
+          head_sha="$(gh pr view "$PR_URL" --json headRefOid --jq .headRefOid)"
+          gh pr ready "$PR_URL"
+          gh pr merge "$PR_URL" \
+            --squash \
+            --match-head-commit "$head_sha" \
+            --subject "Publish weekly review $REVIEW_DATE"
+          merge_sha="$(gh pr view "$PR_URL" --json mergeCommit --jq .mergeCommit.oid)"
+          if [ -z "$merge_sha" ] || [ "$merge_sha" = "null" ]; then
+            echo "GitHub did not return the merge commit SHA." >&2
+            exit 1
+          fi
+          echo "merge_sha=$merge_sha" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    name: Deploy the merged issue to Cloudflare Pages
+    needs: publish
+    if: needs.publish.result == 'success'
+    permissions:
+      contents: read
+      deployments: write
+      issues: write
+    uses: ./.github/workflows/deploy-pages.yml
+    with:
+      commit_sha: ${{ needs.publish.outputs.merge_sha }}
+      report_failure: false
+      close_weekly_failure: true
+    secrets: inherit
 
   report-failure:
     name: Signal a failed weekly run
-    needs: [preflight, propose, publish]
+    needs: [preflight, propose, publish, deploy]
     if: >-
       always() &&
       (needs.preflight.result == 'failure' ||
        (needs.preflight.outputs.should_run == 'true' &&
-        (needs.propose.result == 'failure' || needs.publish.result == 'failure')))
+        (needs.propose.result == 'failure' ||
+         needs.publish.result == 'failure' ||
+         needs.deploy.result == 'failure')))
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -410,6 +468,7 @@ jobs:
         uses: actions/github-script@v8
         env:
           CODEX_FINAL_MESSAGE: ${{ needs.propose.outputs.final_message }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
           FAILURE_DETAIL: ${{ needs.propose.outputs.failure_detail }}
           FAILURE_STAGE: ${{ needs.propose.outputs.failure_stage }}
           PREFLIGHT_RESULT: ${{ needs.preflight.result }}
@@ -431,10 +490,13 @@ jobs:
             let rawDetail = process.env.FAILURE_DETAIL;
             if (process.env.PREFLIGHT_RESULT === "failure") {
               rawStage = "preflight";
-              rawDetail = "The workflow preflight could not determine whether a proposal should run.";
+              rawDetail = "The workflow preflight failed while checking release credentials or the current publication state.";
+            } else if (process.env.DEPLOY_RESULT === "failure") {
+              rawStage = "deploy";
+              rawDetail = "The weekly pull request was merged, but the exact merge commit could not be deployed to Cloudflare Pages.";
             } else if (process.env.PUBLISH_RESULT === "failure") {
               rawStage = "publish";
-              rawDetail = "The validated proposal could not be committed, pushed, or opened as a draft pull request.";
+              rawDetail = "The validated proposal could not be built, committed, opened, or merged as an audit pull request.";
             } else if (
               process.env.PROPOSE_RESULT === "failure" &&
               (!rawStage || rawStage === "success")
@@ -448,6 +510,9 @@ jobs:
               1000,
             );
             const codexMessage = sanitize(process.env.CODEX_FINAL_MESSAGE);
+            const releaseState = process.env.DEPLOY_RESULT === "failure"
+              ? "The validated pull request was merged, but production still serves the previous successful deployment. Retry the deployment workflow after fixing the linked error."
+              : "No pull request was merged or deployed. Inspect the linked run before retrying.";
             const indentedMessage = codexMessage
               ? codexMessage.split("\n").map((line) => `    ${line}`).join("\n")
               : "    No Codex final report was available.";
@@ -460,13 +525,14 @@ jobs:
               `- Preflight: \`${process.env.PREFLIGHT_RESULT}\``,
               `- Proposal: \`${process.env.PROPOSE_RESULT}\``,
               `- Publishing: \`${process.env.PUBLISH_RESULT}\``,
+              `- Deployment: \`${process.env.DEPLOY_RESULT}\``,
               `- Run: ${process.env.RUN_URL}`,
               "",
               "### Codex report",
               "",
               indentedMessage,
               "",
-              "No pull request was merged or deployed. Inspect the linked run before retrying.",
+              releaseState,
             ].join("\n");
             const issues = await github.paginate(github.rest.issues.listForRepo, {
               owner: context.repo.owner,

@@ -188,7 +188,7 @@ export function createPullRequestBody(result, runUrl) {
   if (result.verdict === "YES") {
     lines.push(
       "> [!WARNING]",
-      "> This proposal changes the verdict to **YES**. All four strict conditions still require explicit human verification.",
+      "> This proposal changes the verdict to **YES**. All four strict conditions passed the same automated release gates.",
       "",
     );
   }
@@ -217,7 +217,7 @@ export function createPullRequestBody(result, runUrl) {
     "- [x] The proposal changes only `content/weekly.json`.",
     "- [x] Content validation and the complete test suite passed.",
     "",
-    "### Human review",
+    "### Optional post-publication spot check",
     "",
     "- [ ] Confirm at least one displayed development is genuinely new, including the underlying event rather than only its URL.",
     "- [ ] Open all three source links and verify publisher, title, publication date, relevance, and primary-source status.",
@@ -227,7 +227,7 @@ export function createPullRequestBody(result, runUrl) {
     "- [ ] Confirm the verdict is `YES` only if all four strict criteria are `met`.",
     "- [ ] Confirm the subtitle is accurate, dryly humorous, and appropriate in both languages.",
     "",
-    "This pull request is intentionally a draft. The automation never merges or deploys.",
+    "This pull request is an audit record. After all fixed gates pass, the automation marks it ready, merges it, and deploys the exact merged commit.",
   );
 
   return `${lines.join("\n")}\n`;

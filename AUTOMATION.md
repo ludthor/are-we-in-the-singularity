@@ -1,16 +1,19 @@
 # Weekly review automation contract
 
-The scheduled Codex job proposes editorial changes through GitHub Actions on a
-hosted runner. It never merges a pull request and never deploys the site.
-A draft for the current review date suppresses duplicate non-forced runs, but
-an older open weekly draft must never suppress the current week's proposal.
+The scheduled Codex job researches, validates, merges, and deploys the weekly
+editorial update through GitHub Actions on a hosted runner. The pull request is
+kept as an audit record rather than a human release gate. An issue already
+merged for the current review date suppresses duplicate runs; a
+failed same-day draft is refreshed and retried by the fallback schedule.
 
 ## Allowed change
 
-The weekly job may modify only `content/weekly.json`.
+The Codex research job may modify only `content/weekly.json`.
 
 It must not modify application code, dependencies, tests, automation rules,
 hosting configuration, access controls, repository settings, or secrets.
+The fixed release jobs may only commit that validated content file, merge its
+automation branch, and deploy the exact merged commit.
 
 ## Research rules
 
@@ -68,7 +71,7 @@ Use only `not_met`, `partial`, or `met`.
 
 The verdict is `YES` only when all four conditions are `met`. Otherwise it is
 `NO`. A proposed `YES` must be prominently called out in the pull request and
-still requires human review.
+passes through the same automated validation, merge, and deployment gates.
 
 ## Editorial rules
 
@@ -98,6 +101,9 @@ still requires human review.
 - The Codex research job receives no GitHub write credential. A separate fixed
   publishing job receives the short-lived `GITHUB_TOKEN` only after every gate
   passes.
+- Before paid research begins, confirm that both Cloudflare deployment secrets
+  are configured. Do not expose either value in logs, artifacts, pull requests,
+  issues, or general workflow environment variables.
 - Codex command traffic runs through its network proxy and may reach only the
   apex domains and subdomains represented by
   `automation/weekly-schema.mjs#ALLOWED_SOURCE_DOMAINS`; no global network
@@ -106,8 +112,11 @@ still requires human review.
   concrete `content` directory, whose only tracked file is `weekly.json`.
   The next fixed gate rejects every changed path except `content/weekly.json`;
   ignored dependencies and Git metadata are not writable during research.
+- The fixed deployment workflow receives the Cloudflare credentials only for
+  the Direct Upload command. It checks out the merge commit by SHA, installs the
+  committed lockfile, validates content, and creates a fresh static export.
 
-## Validation and pull request
+## Validation and automated release
 
 1. Run `npm run content:validate`.
 2. Run `npm test`.
@@ -117,14 +126,23 @@ still requires human review.
    honest carryover dates, and the schema's maximum source age.
 5. Commit on `automation/weekly-YYYY-MM-DD`.
 6. Push the branch to `ludthor/are-we-in-the-singularity`.
-7. Open or refresh a **draft** pull request against `main` with the
-   `weekly-review` label.
+7. Open or refresh a draft pull request against `main` with the `weekly-review`
+   label so the complete proposal remains visible as an audit record.
 8. Identify genuinely new stories, carryovers, and older unused supporting
-   stories in the pull request. Include checklist items for minimum novelty,
+   stories in the pull request. Record the passed checks for minimum novelty,
    source links and dates, honest carryovers, translations, four criteria,
-   verdict, and subtitle.
-9. Request `ludthor` as reviewer. On failure, create or refresh an issue assigned
-   to `ludthor` with the failed stage and Actions run link.
+   verdict, subtitle, and content-only scope.
+9. Build the Cloudflare Pages static export before merging. Confirm the PR head
+   commit still matches the validated commit, mark it ready, and squash-merge
+   it without an approving review.
+10. Check out the returned merge commit by SHA, repeat the committed dependency
+    install, content validation, and static build, then deploy `dist/client` to
+    the `singularity-now` Cloudflare Pages production branch.
+11. Close standing weekly and deployment failure issues only after production
+    deployment succeeds. On any failure, create or refresh an issue assigned to
+    `ludthor` with the failed stage and Actions run link.
 
 Stop without committing or opening a pull request if any check fails. Report
-the exact failure; do not weaken a validation rule.
+the exact failure; do not weaken a validation rule. A failure before merge must
+leave production unchanged. A deployment failure after merge must leave the
+previous production deployment serving and create a retryable failure signal.
