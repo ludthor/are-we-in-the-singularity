@@ -155,12 +155,29 @@ test("rejects a previous development relabeled as older supporting evidence", ()
   );
 });
 
-test("rejects a nominally new story outside the seven-day research window", () => {
+test("classifies a post-review 8-14-day story as supporting evidence", () => {
   const { previous, proposal } = validProposal();
   previous.reviewedAt = "2026-07-30";
-  proposal.stories[0].publishedAt = "2026-08-01";
-  assert.throws(
-    () => validateWeeklyProposal(previous, proposal, "2026-08-10"),
-    /seven-day research window/,
+  proposal.stories[1] = {
+    href: "https://metr.org/blog/older-distinct-reliability-study/",
+    publisher: "METR",
+    publishedAt: "2026-08-01",
+    headline: {
+      en: "An older reliability study measured bounded agent recovery gains",
+      es: "Un estudio anterior de fiabilidad midió mejoras limitadas de recuperación",
+    },
+    label: {
+      en: "Supporting, not new",
+      es: "Apoyo, no novedad",
+    },
+    summary: {
+      en: "The distinct primary study remains within fourteen days but falls outside the seven-day window required for genuinely new classification.",
+      es: "El estudio primario distinto sigue dentro de catorce días, pero queda fuera de la ventana de siete días exigida para considerarlo genuinamente nuevo.",
+    },
+  };
+  const result = validateWeeklyProposal(previous, proposal, "2026-08-10");
+  assert.deepEqual(
+    result.classifications.map(({ kind }) => kind),
+    ["new", "supporting", "carryover"],
   );
 });

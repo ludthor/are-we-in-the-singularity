@@ -135,16 +135,12 @@ export function validateWeeklyProposal(previous, proposal, expectedReviewDate) {
 
     const afterPreviousReview =
       parseDate(story.publishedAt) > parseDate(previous.reviewedAt);
+    const ageDays =
+      (parseDate(proposal.reviewedAt) - parseDate(story.publishedAt)) / DAY_MS;
     const duplicateIndex = previous.stories.findIndex((candidate) =>
       likelySameDevelopment(story, candidate),
     );
-    if (afterPreviousReview) {
-      const ageDays =
-        (parseDate(proposal.reviewedAt) - parseDate(story.publishedAt)) / DAY_MS;
-      assert(
-        ageDays <= 7,
-        `stories[${index}] cannot count as genuinely new outside the seven-day research window`,
-      );
+    if (afterPreviousReview && ageDays <= 7) {
       assert(
         duplicateIndex === -1,
         `stories[${index}] appears to recycle previous development stories[${duplicateIndex}] through a new URL`,
@@ -215,7 +211,7 @@ export function createPullRequestBody(result, runUrl) {
     "### Automated gates",
     "",
     "- [x] Exactly three distinct source URLs are present.",
-    "- [x] At least one source has a new URL and publication date strictly after the previous approved review.",
+    "- [x] At least one source is within the seven-day window with a new URL and publication date strictly after the previous approved review.",
     "- [x] Carryovers retain their original publisher, URL, and publication date.",
     "- [x] All sources satisfy the schema's 14-day maximum age.",
     "- [x] The proposal changes only `content/weekly.json`.",
