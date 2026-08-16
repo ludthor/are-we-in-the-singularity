@@ -141,6 +141,8 @@ jobs:
           prompt-file: .github/codex/prompts/weekly-dossier.md
           codex-home: ${{ runner.temp }}/codex-home
           permission-profile: weekly-editor
+          model: gpt-5.6-terra
+          effort: medium
           safety-strategy: drop-sudo
           codex-args: '["--ephemeral", "--strict-config"]'
           allow-users: ludthor
