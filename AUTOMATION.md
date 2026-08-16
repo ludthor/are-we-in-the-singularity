@@ -33,8 +33,9 @@ hosting configuration, access controls, repository settings, or secrets.
 
 A story is **genuinely new** only when all of these are true:
 
-1. Its publication date is strictly after the previous approved `reviewedAt`
-   and no later than the new `reviewedAt`.
+1. Its publication date is within the seven-day trailing research window,
+   strictly after the previous approved `reviewedAt`, and no later than the new
+   `reviewedAt`.
 2. Its final URL was absent from the previous issue.
 3. Its underlying development was not presented in the previous issue through
    another URL or publisher.
@@ -42,10 +43,12 @@ A story is **genuinely new** only when all of these are true:
 Prefer three genuinely new developments, then two, but require at least one.
 When only one or two qualify, fill the remaining slots with the strongest
 distinct primary-source developments that still satisfy the schema's 14-day
-maximum age. Prefer valid developments not shown in the previous issue, then
-carry forward a previous story only when it remains timely, consequential,
-relevant, and independently reverified. Never change a carryover's original
-publisher, URL, or publication date.
+maximum age. A distinct development published 8–14 days before the new review
+is supporting evidence, even when it was published after the previous review;
+never label it genuinely new. Prefer valid developments not shown in the
+previous issue, then carry forward a previous story only when it remains
+timely, consequential, relevant, and independently reverified. Never change a
+carryover's original publisher, URL, or publication date.
 
 If zero genuinely new developments can be verified, or fewer than three total
 schema-valid stories can be assembled, stop without editing and report the

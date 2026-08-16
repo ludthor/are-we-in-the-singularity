@@ -23,7 +23,10 @@ genuinely new developments in the seven-day trailing window ending on that
 date. Prefer three genuinely new developments, then two, but require at least
 one. Apply the strict definition of genuinely new and the 14-day fallback rules
 from `AUTOMATION.md`; do not relabel recycled coverage as a new development and
-do not change a carryover's publisher, URL, or publication date.
+do not change a carryover's publisher, URL, or publication date. A distinct
+story published 8–14 days before the new review may be supporting fallback
+evidence even if it postdates the previous review, but it is never genuinely
+new. Identify that distinction accurately in your final response.
 
 If zero genuinely new developments qualify, or fewer than three total
 schema-valid developments can be assembled, leave the repository unchanged.
