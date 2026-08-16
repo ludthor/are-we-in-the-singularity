@@ -1,0 +1,251 @@
+name: Deploy site to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: Exact commit to deploy; defaults to the triggering commit
+        required: false
+        default: ""
+        type: string
+      report_failure:
+        description: Create or refresh the assigned deployment failure issue
+        required: false
+        default: true
+        type: boolean
+      close_weekly_failure:
+        description: Close a weekly failure after a successful deployment retry
+        required: false
+        default: true
+        type: boolean
+  workflow_call:
+    inputs:
+      commit_sha:
+        description: Exact merged commit to deploy
+        required: true
+        type: string
+      report_failure:
+        description: Report failure here instead of in the calling workflow
+        required: false
+        default: false
+        type: boolean
+      close_weekly_failure:
+        description: Close the standing weekly failure after production succeeds
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      CLOUDFLARE_ACCOUNT_ID:
+        required: true
+      CLOUDFLARE_API_TOKEN:
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-cloudflare-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy the exact commit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Confirm Cloudflare release secrets are configured
+        env:
+          HAS_CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+          HAS_CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        run: |
+          if [ "$HAS_CLOUDFLARE_ACCOUNT_ID" != "true" ]; then
+            echo "CLOUDFLARE_ACCOUNT_ID is missing from repository Actions secrets." >&2
+            exit 1
+          fi
+          if [ "$HAS_CLOUDFLARE_API_TOKEN" != "true" ]; then
+            echo "CLOUDFLARE_API_TOKEN is missing from repository Actions secrets." >&2
+            exit 1
+          fi
+
+      - name: Check out the exact release commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.commit_sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Use the repository Node.js version
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22.13.0"
+          cache: npm
+
+      - name: Install committed dependencies
+        run: npm ci
+
+      - name: Verify the checked-out commit
+        env:
+          EXPECTED_COMMIT: ${{ inputs.commit_sha || github.sha }}
+        run: |
+          actual_commit="$(git rev-parse HEAD)"
+          if [ "$actual_commit" != "$EXPECTED_COMMIT" ]; then
+            echo "Expected commit $EXPECTED_COMMIT but checked out $actual_commit." >&2
+            exit 1
+          fi
+
+      - name: Validate content and build the static export
+        run: |
+          npm run content:validate
+          npm run build:pages
+          test -f dist/client/index.html
+          test -f dist/client/es/index.html
+
+      - name: Deploy to the production Pages branch
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          attempt=1
+          until npx wrangler pages deploy dist/client \
+            --project-name singularity-now \
+            --branch main; do
+            if [ "$attempt" -ge 3 ]; then
+              echo "Cloudflare Pages deployment failed after $attempt attempts." >&2
+              exit 1
+            fi
+            attempt=$((attempt + 1))
+            echo "Retrying Cloudflare Pages deployment (attempt $attempt of 3)." >&2
+          done
+
+      - name: Verify both production routes respond
+        run: |
+          expected_source="$(node -p "JSON.parse(require('fs').readFileSync('content/weekly.json', 'utf8')).stories[0].href")"
+          verify_route() {
+            route="$1"
+            attempt=1
+            while [ "$attempt" -le 10 ]; do
+              page="$(curl --fail --silent --show-error "$route")" || true
+              if printf '%s' "$page" | grep --fixed-strings --quiet -- "$expected_source"; then
+                return 0
+              fi
+              if [ "$attempt" -lt 10 ]; then
+                sleep 3
+              fi
+              attempt=$((attempt + 1))
+            done
+            echo "Production route $route did not serve the expected weekly source after deployment." >&2
+            return 1
+          }
+          verify_route https://singularity-now.pages.dev/
+          verify_route https://singularity-now.pages.dev/es/
+
+  recover:
+    name: Close standing release failures after success
+    needs: deploy
+    if: needs.deploy.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Close the applicable standing failure issues
+        continue-on-error: true
+        uses: actions/github-script@v8
+        env:
+          CLOSE_WEEKLY_FAILURE: ${{ inputs.close_weekly_failure }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const titles = ["[automation] Production deployment failure"];
+            if (process.env.CLOSE_WEEKLY_FAILURE === "true") {
+              titles.push("[automation] Weekly dossier failure");
+            }
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              per_page: 100,
+            });
+            for (const issue of issues.filter((candidate) =>
+              !candidate.pull_request && titles.includes(candidate.title)
+            )) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: `Recovered successfully: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: "closed",
+              });
+            }
+
+  report-failure:
+    name: Signal a failed production deployment
+    needs: deploy
+    if: >-
+      always() &&
+      needs.deploy.result == 'failure' &&
+      (github.event_name == 'push' || inputs.report_failure)
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create or refresh the assigned deployment failure issue
+        uses: actions/github-script@v8
+        env:
+          COMMIT_SHA: ${{ inputs.commit_sha || github.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const title = "[automation] Production deployment failure";
+            const body = [
+              "## Cloudflare Pages deployment failed",
+              "",
+              `- Commit: \`${process.env.COMMIT_SHA}\``,
+              `- Run: ${process.env.RUN_URL}`,
+              "- Production continues serving the previous successful deployment.",
+              "",
+              "Fix the linked error, then manually run **Deploy site to Cloudflare Pages** to retry the same commit without repeating weekly research.",
+            ].join("\n");
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "all",
+              per_page: 100,
+            });
+            const existing = issues.find((candidate) =>
+              !candidate.pull_request && candidate.title === title,
+            );
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body,
+                assignees: ["ludthor"],
+                labels: ["bug"],
+                state: "open",
+              });
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: `Another deployment failed: ${process.env.RUN_URL}`,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                assignees: ["ludthor"],
+                labels: ["bug"],
+              });
+            }

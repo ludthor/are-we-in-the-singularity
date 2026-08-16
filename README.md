@@ -3,8 +3,9 @@
 A bilingual weekly field note that answers one question using a deliberately
 strict definition of the technological singularity.
 
-- Live site: <https://are-we-in-the-singularity.ludthor.chatgpt.site>
-- Spanish: <https://are-we-in-the-singularity.ludthor.chatgpt.site/es>
+- Live site: <https://singularity-now.pages.dev>
+- Spanish: <https://singularity-now.pages.dev/es/>
+- Previous deployment: <https://are-we-in-the-singularity.ludthor.chatgpt.site>
 - Author: [@ludthor](https://github.com/ludthor)
 
 ## Local development
@@ -15,6 +16,13 @@ Requires Node.js `>=22.13.0`.
 npm ci
 npm run dev
 npm test
+```
+
+The production site is a static export hosted on Cloudflare Pages:
+
+```bash
+npm run build:pages
+npx wrangler pages deploy dist/client --project-name singularity-now
 ```
 
 Weekly editorial data lives in `content/weekly.json`. The application keeps
@@ -43,19 +51,21 @@ The workflow:
 5. Mechanically compares the proposal with the previous approved issue,
    protects carryover dates and publishers, and builds and tests both language
    routes.
-6. Uses a separate fixed publishing job to open or refresh a **draft pull
-   request** containing only
-   `content/weekly.json`.
-7. Requests human review on success or opens an assigned failure issue with the
-   workflow-run link.
+6. Uses a separate fixed publishing job to open or refresh a short-lived audit
+   pull request containing only `content/weekly.json`.
+7. Builds the Cloudflare Pages static export, marks the audit PR ready, and
+   squash-merges it with a head-commit lock only after every gate passes.
+8. Rebuilds the exact merged commit and deploys it to production. Research,
+   publishing, and deployment failures open or refresh assigned GitHub issues.
 
-Only a draft for the current review date suppresses a duplicate run. An older
-unmerged weekly draft does not block the next Monday's required proposal.
+An issue already merged for the current review date suppresses the fallback
+schedule. A failed same-day draft is refreshed and retried automatically.
 
-It never deploys or merges. A person must verify the links, dates, translations,
-criteria, and joke before merging.
+The pull request remains available as an audit record. Human spot checks are
+welcome but are not a release gate for this intentionally low-risk toy project.
 
 The OpenAI API key is stored only as the `OPENAI_API_KEY` Actions repository
 secret and passed directly to the Codex Action. GitHub write access uses the
 workflow run's short-lived `GITHUB_TOKEN`; no personal access token is stored in
-the repository.
+the repository. Cloudflare Direct Upload uses the `CLOUDFLARE_ACCOUNT_ID` and
+`CLOUDFLARE_API_TOKEN` Actions secrets only in the fixed deployment workflow.
