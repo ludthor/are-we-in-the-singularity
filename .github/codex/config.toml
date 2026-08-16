@@ -8,5 +8,5 @@ extends = ":read-only"
 glob_scan_max_depth = 4
 
 [permissions.weekly-editor.filesystem.":workspace_roots"]
-"content/weekly.json" = "write"
+"content" = "write"
 "**/*.env" = "deny"
