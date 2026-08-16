@@ -2,6 +2,8 @@
 
 The scheduled Codex job proposes editorial changes through GitHub Actions on a
 hosted runner. It never merges a pull request and never deploys the site.
+A draft for the current review date suppresses duplicate non-forced runs, but
+an older open weekly draft must never suppress the current week's proposal.
 
 ## Allowed change
 
@@ -93,9 +95,14 @@ still requires human review.
 - The Codex research job receives no GitHub write credential. A separate fixed
   publishing job receives the short-lived `GITHUB_TOKEN` only after every gate
   passes.
-- A Codex permission profile makes the repository read-only except for
-  `content/weekly.json`; ignored dependencies and Git metadata are not writable
-  during research.
+- Codex command traffic runs through its network proxy and may reach only the
+  apex domains and subdomains represented by
+  `automation/weekly-schema.mjs#ALLOWED_SOURCE_DOMAINS`; no global network
+  wildcard is permitted.
+- A Codex permission profile makes the repository read-only except for the
+  concrete `content` directory, whose only tracked file is `weekly.json`.
+  The next fixed gate rejects every changed path except `content/weekly.json`;
+  ignored dependencies and Git metadata are not writable during research.
 
 ## Validation and pull request
 

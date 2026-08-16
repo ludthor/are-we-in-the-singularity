@@ -52,3 +52,16 @@ test("fails closed on extra fields, invalid verdicts, and untrusted sources", ()
     /outside the source allowlist/,
   );
 });
+
+test("rejects modern API-key shapes in publishable content", () => {
+  const withSyntheticSecret = structuredClone(weekly);
+  const syntheticKey = ["sk", "proj", "abcdefghijklmnopqrstuvwxyz012345"].join(
+    "-",
+  );
+  withSyntheticSecret.subtitle.en =
+    `Synthetic credential ${syntheticKey} must never ship.`;
+  assert.throws(
+    () => validateWeeklyContent(withSyntheticSecret),
+    /sensitive-looking data/,
+  );
+});

@@ -1,5 +1,8 @@
 web_search = "live"
 
+[features]
+network_proxy = true
+
 [permissions.weekly-editor]
 description = "Read the repository and edit only the weekly dossier."
 extends = ":read-only"
@@ -10,3 +13,19 @@ glob_scan_max_depth = 4
 [permissions.weekly-editor.filesystem.":workspace_roots"]
 "content" = "write"
 "**/*.env" = "deny"
+
+[permissions.weekly-editor.network]
+enabled = true
+
+[permissions.weekly-editor.network.domains]
+"**.ai.google" = "allow"
+"**.anthropic.com" = "allow"
+"**.arxiv.org" = "allow"
+"**.deepmind.google" = "allow"
+"**.epoch.ai" = "allow"
+"**.hai.stanford.edu" = "allow"
+"**.huggingface.co" = "allow"
+"**.metr.org" = "allow"
+"**.microsoft.com" = "allow"
+"**.openai.com" = "allow"
+"**.research.google" = "allow"

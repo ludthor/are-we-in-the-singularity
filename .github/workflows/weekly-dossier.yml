@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: Run even when another weekly-review draft is open
+        description: Run even when this week's weekly-review draft is open
         required: false
         default: false
         type: boolean
@@ -52,18 +52,17 @@ jobs:
               dateParts.filter(({ type }) => type !== "literal").map(({ type, value }) => [type, value]),
             );
             const reviewDate = `${values.year}-${values.month}-${values.day}`;
+            const branch = `automation/weekly-${reviewDate}`;
             const pulls = await github.paginate(github.rest.pulls.list, {
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: "open",
               per_page: 100,
             });
-            const existing = pulls.find(({ head }) =>
-              /^automation\/weekly-\d{4}-\d{2}-\d{2}$/.test(head.ref),
-            );
+            const existing = pulls.find(({ head }) => head.ref === branch);
             const force = process.env.FORCE_RUN === "true";
             core.setOutput("review_date", reviewDate);
-            core.setOutput("branch", `automation/weekly-${reviewDate}`);
+            core.setOutput("branch", branch);
             core.setOutput("existing_pr", existing?.html_url ?? "");
             core.setOutput("should_run", force || !existing ? "true" : "false");
             if (existing && !force) {
@@ -424,17 +423,28 @@ jobs:
             const title = "[automation] Weekly dossier failure";
             const sanitize = (value, limit = 6000) => String(value || "")
               .replace(/\u001b\[[0-9;]*m/g, "")
-              .replace(/\b(?:sk|gh[opusr])_[A-Za-z0-9_-]{12,}\b/g, "[redacted credential]")
+              .replace(/\b(?:sk[-_]|gh[opusr]_)[A-Za-z0-9_-]{12,}\b/g, "[redacted credential]")
               .replace(/\/(?:home\/runner|Users)\/[^\s]+/g, "[redacted local path]")
               .replace(/@/g, "@\u200b")
               .slice(0, limit);
-            const stage = sanitize(
-              process.env.FAILURE_STAGE ||
-              (process.env.PREFLIGHT_RESULT === "failure" ? "preflight" : "publish"),
-              100,
-            );
+            let rawStage = process.env.FAILURE_STAGE;
+            let rawDetail = process.env.FAILURE_DETAIL;
+            if (process.env.PREFLIGHT_RESULT === "failure") {
+              rawStage = "preflight";
+              rawDetail = "The workflow preflight could not determine whether a proposal should run.";
+            } else if (process.env.PUBLISH_RESULT === "failure") {
+              rawStage = "publish";
+              rawDetail = "The validated proposal could not be committed, pushed, or opened as a draft pull request.";
+            } else if (
+              process.env.PROPOSE_RESULT === "failure" &&
+              (!rawStage || rawStage === "success")
+            ) {
+              rawStage = "propose";
+              rawDetail = "The research job failed before it could report a more specific stage.";
+            }
+            const stage = sanitize(rawStage || "unknown", 100);
             const detail = sanitize(
-              process.env.FAILURE_DETAIL || "See the failed job logs for the exact error.",
+              rawDetail || "See the failed job logs for the exact error.",
               1000,
             );
             const codexMessage = sanitize(process.env.CODEX_FINAL_MESSAGE);
