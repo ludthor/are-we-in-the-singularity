@@ -58,6 +58,15 @@ schema-valid stories can be assembled, stop without editing and report the
 exact shortage and candidate rejection reasons. Do not invent news, broaden the
 allowlist, widen the freshness rules, or weaken validation.
 
+The fixed workflow computes the exact inclusive publication-date interval that
+can count as genuinely new from the approved `reviewedAt` and the new review
+date, then appends those dates to the bounded editor prompt. The editor must
+return a schema-constrained `proposal` or `no_proposal` result. An unchanged
+tree is accepted only with a structured `no_proposal` shortage and candidate
+rejection report; it is then signaled as an `editorial-shortage` failure because
+the hard weekly publication requirement was not met. Any other no-change result
+or any unauthorized changed path is a scope failure.
+
 ## Verdict rules
 
 Assess these conditions in their canonical order:
@@ -112,6 +121,10 @@ passes through the same automated validation, merge, and deployment gates.
   concrete `content` directory, whose only tracked file is `weekly.json`.
   The next fixed gate rejects every changed path except `content/weekly.json`;
   ignored dependencies and Git metadata are not writable during research.
+- The Codex final report is constrained by
+  `.github/codex/schemas/weekly-dossier-output.json` and written outside the
+  repository. A fixed classifier cross-checks that result against the Git
+  status before proposal validation can run.
 - The fixed deployment workflow receives the Cloudflare credentials only for
   the Direct Upload command. It checks out the merge commit by SHA, installs the
   committed lockfile, validates content, and creates a fresh static export.

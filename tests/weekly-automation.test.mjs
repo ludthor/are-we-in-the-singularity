@@ -15,6 +15,15 @@ const deploymentWorkflow = await readFile(
   new URL("../.github/workflows/deploy-pages.yml", import.meta.url),
   "utf8",
 );
+const editorOutputSchema = JSON.parse(
+  await readFile(
+    new URL(
+      "../.github/codex/schemas/weekly-dossier-output.json",
+      import.meta.url,
+    ),
+    "utf8",
+  ),
+);
 
 test("Codex command networking is proxied and mirrors the source allowlist", () => {
   assert.match(codexConfig, /\[features\]\nnetwork_proxy = true/);
@@ -56,6 +65,24 @@ test("a merged current issue suppresses duplicates while a failed draft remains 
     ),
   );
   assert.match(workflow, /Refreshing retryable audit pull request/);
+});
+
+test("weekly research receives exact dates and a structured fail-closed result", () => {
+  assert.match(workflow, /genuinelyNewDateBounds/);
+  assert.match(workflow, /Genuinely new publishedAt interval \(inclusive\)/);
+  assert.match(workflow, /output-file: \$\{\{ runner\.temp \}\}\/weekly-editor-result\.json/);
+  assert.match(
+    workflow,
+    /output-schema-file: \.github\/codex\/schemas\/weekly-dossier-output\.json/,
+  );
+  assert.match(workflow, /steps\.editor_result\.outputs\.kind == 'proposal'/);
+  assert.match(workflow, /stage="editorial-shortage"/);
+  assert.match(workflow, /invalid structured result or changed an unauthorized path/);
+  assert.deepEqual(editorOutputSchema.properties.outcome.enum, [
+    "proposal",
+    "no_proposal",
+  ]);
+  assert.equal(editorOutputSchema.additionalProperties, false);
 });
 
 test("weekly release is head-locked, automatic, and deploys the merge commit", () => {

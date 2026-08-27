@@ -40,6 +40,28 @@ function parseDate(value) {
   return new Date(`${value}T00:00:00Z`);
 }
 
+function formatDate(value) {
+  return value.toISOString().slice(0, 10);
+}
+
+export function genuinelyNewDateBounds(previousReviewedAt, reviewedAt) {
+  const previousDate = parseDate(previousReviewedAt);
+  const reviewDate = parseDate(reviewedAt);
+  assert(
+    reviewDate > previousDate,
+    "reviewedAt must be strictly after the previous approved reviewedAt",
+  );
+  const firstDateAfterPrevious = new Date(previousDate.valueOf() + DAY_MS);
+  const trailingWindowStart = new Date(reviewDate.valueOf() - 7 * DAY_MS);
+  const earliest = new Date(
+    Math.max(firstDateAfterPrevious.valueOf(), trailingWindowStart.valueOf()),
+  );
+  return {
+    earliest: formatDate(earliest),
+    latest: formatDate(reviewDate),
+  };
+}
+
 function normalizeText(value) {
   return value
     .normalize("NFKD")
@@ -99,9 +121,9 @@ export function validateWeeklyProposal(previous, proposal, expectedReviewDate) {
     proposal.reviewedAt === expectedReviewDate,
     `reviewedAt must equal the actual review date ${expectedReviewDate}`,
   );
-  assert(
-    parseDate(proposal.reviewedAt) > parseDate(previous.reviewedAt),
-    "reviewedAt must be strictly after the previous approved reviewedAt",
+  const newDateBounds = genuinelyNewDateBounds(
+    previous.reviewedAt,
+    proposal.reviewedAt,
   );
 
   for (let left = 0; left < proposal.stories.length; left += 1) {
@@ -133,14 +155,14 @@ export function validateWeeklyProposal(previous, proposal, expectedReviewDate) {
       continue;
     }
 
-    const afterPreviousReview =
-      parseDate(story.publishedAt) > parseDate(previous.reviewedAt);
-    const ageDays =
-      (parseDate(proposal.reviewedAt) - parseDate(story.publishedAt)) / DAY_MS;
+    const publishedAt = parseDate(story.publishedAt);
+    const inNewDateWindow =
+      publishedAt >= parseDate(newDateBounds.earliest) &&
+      publishedAt <= parseDate(newDateBounds.latest);
     const duplicateIndex = previous.stories.findIndex((candidate) =>
       likelySameDevelopment(story, candidate),
     );
-    if (afterPreviousReview && ageDays <= 7) {
+    if (inNewDateWindow) {
       assert(
         duplicateIndex === -1,
         `stories[${index}] appears to recycle previous development stories[${duplicateIndex}] through a new URL`,
