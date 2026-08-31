@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 34,
-  "reviewedAt": "2026-08-24",
+  "issue": 35,
+  "reviewedAt": "2026-08-31",
   "verdict": "NO",
   "subtitle": {
-    "en": "The models learned about bodies and bus stops. The universe has not yet handed them the keys.",
-    "es": "Los modelos aprendieron sobre cuerpos y paradas de autobús. El universo aún no les ha dado las llaves."
+    "en": "The agents can operate lab equipment and forecast the planet. The keys remain on a very short lanyard.",
+    "es": "Los agentes pueden operar equipos de laboratorio y predecir el planeta. Las llaves siguen con una correa muy corta."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The evidence covers biomedical candidate ranking, place-specific prediction, and a clinical imaging task; it does not show reliable best-human performance across most consequential cognitive domains.",
-        "es": "Las pruebas abarcan la priorización biomédica, predicciones sobre lugares y una tarea clínica de imagen; no muestran un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
+        "en": "The evidence covers geospatial modelling, metabolic prediction, and laboratory-device control; it does not establish reliable best-human performance across most consequential cognitive domains.",
+        "es": "Las pruebas abarcan el modelado geoespacial, la predicción metabólica y el control de equipos de laboratorio; no establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The biomarker framework iterates hypotheses and analyses within a human-designed research workflow, but no source verifies a system autonomously improving its own capabilities in a closed loop.",
-        "es": "El marco de biomarcadores itera hipótesis y análisis dentro de un flujo de investigación diseñado por personas, pero ninguna fuente verifica que un sistema mejore autónomamente sus propias capacidades en un bucle cerrado."
+        "en": "The reported systems automate bounded modelling or instrument workflows, but no source verifies a system autonomously improving its own capabilities in a closed loop.",
+        "es": "Los sistemas descritos automatizan flujos acotados de modelado o instrumentación, pero ninguna fuente verifica que un sistema mejore autónomamente sus propias capacidades en un bucle cerrado."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reported applications may aid research and prediction, but no source shows AI-generated improvements making the next round faster or more capable without continued human direction.",
-        "es": "Las aplicaciones descritas pueden ayudar a investigar y predecir, pero ninguna fuente muestra mejoras generadas por IA que hagan la siguiente ronda más rápida o capaz sin dirección humana continua."
+        "en": "Automated geospatial analysis and laboratory workflows may speed specific work, but no source shows AI-generated improvements making the next round faster or more capable without continued human direction.",
+        "es": "El análisis geoespacial y los flujos de laboratorio automatizados pueden acelerar tareas concretas, pero ninguna fuente muestra mejoras generadas por IA que hagan la siguiente ronda más rápida o capaz sin dirección humana continua."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Narrow research results on biomarkers, mobility, and cardiometabolic risk remain legible within ordinary forecasts; they do not show a broken forecasting regime.",
-        "es": "Los resultados acotados sobre biomarcadores, movilidad y riesgo cardiometabólico siguen siendo legibles en previsiones convencionales; no muestran un régimen de predicción roto."
+        "en": "The reported advances in geospatial prediction, metabolic modelling, and laboratory automation remain legible within ordinary forecasts; they do not show a broken forecasting regime.",
+        "es": "Los avances descritos en predicción geoespacial, modelado metabólico y automatización de laboratorio siguen siendo legibles en previsiones convencionales; no muestran un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://research.google/blog/an-ai-tool-for-prioritizing-candidate-biomarkers-from-wearable-sensor-data/",
-      "publisher": "Google Research",
-      "publishedAt": "2026-08-21",
+      "href": "https://www.anthropic.com/news/model-hardware-standard-research-preview",
+      "publisher": "Anthropic",
+      "publishedAt": "2026-08-27",
       "headline": {
-        "en": "Google Research introduced a multi-agent framework for proposing wearable-data biomarkers",
-        "es": "Google Research presentó un marco multiagente para proponer biomarcadores a partir de datos de dispositivos portátiles"
+        "en": "Anthropic opened a research preview of a standard for agents to operate physical devices",
+        "es": "Anthropic abrió una vista previa de investigación de un estándar para que los agentes operen dispositivos físicos"
       },
       "label": {
-        "en": "Research workflow, assisted",
-        "es": "Flujo de investigación asistido"
+        "en": "Hardware, with guardrails",
+        "es": "Hardware, con barandillas"
       },
       "summary": {
-        "en": "Google Research introduced the Biomarker Discovery Framework, which combines iterative hypothesis generation, statistical analysis, and literature-grounded reasoning to support candidate discovery from wearable sensors. It is a designed research workflow, not evidence of autonomous self-improvement.",
-        "es": "Google Research presentó el Biomarker Discovery Framework, que combina generación iterativa de hipótesis, análisis estadístico y razonamiento basado en literatura para apoyar el hallazgo de candidatos con sensores portátiles. Es un flujo de investigación diseñado, no una prueba de automejora autónoma."
+        "en": "Anthropic opened a research preview of the Model Hardware Standard, a shared specification for agents to operate programmable laboratory and manufacturing devices. It describes bounded, safety-oriented deployment and faster integration—not an agent improving itself.",
+        "es": "Anthropic abrió una vista previa de investigación del Model Hardware Standard, una especificación compartida para que agentes operen dispositivos programables de laboratorio y fabricación. Describe un despliegue acotado y orientado a la seguridad, e integración más rápida; no un agente que se mejore a sí mismo."
       }
     },
     {
-      "href": "https://research.google/blog/how-mobility-gives-language-models-a-deeper-understanding-of-place/",
+      "href": "https://research.google/blog/planetary-prediction-engine-automating-global-models-via-earth-ai/",
       "publisher": "Google Research",
-      "publishedAt": "2026-08-21",
+      "publishedAt": "2026-08-27",
       "headline": {
-        "en": "Google Research used mobility data to improve models’ predictions about places",
-        "es": "Google Research usó datos de movilidad para mejorar las predicciones de los modelos sobre lugares"
+        "en": "Google Research introduced an autonomous geospatial prediction workflow",
+        "es": "Google Research presentó un flujo autónomo de predicción geoespacial"
       },
       "label": {
-        "en": "Places have rhythms",
-        "es": "Los lugares tienen ritmos"
+        "en": "Planetary analytics, bounded",
+        "es": "Analítica planetaria acotada"
       },
       "summary": {
-        "en": "Google Research introduced a mobility-informed framework that represents places’ changing activity rhythms. It reports improved predictions of opening hours, price levels, and busyness—useful grounded prediction, but not general or autonomous intelligence.",
-        "es": "Google Research presentó un marco informado por movilidad que representa los ritmos cambiantes de actividad de los lugares. Informa mejoras al predecir horarios, niveles de precio y afluencia: predicción situada útil, pero no inteligencia general ni autónoma."
+        "en": "Google Research introduced the experimental Planetary Prediction Engine, which retrieves data, engineers features, trains and evaluates models from geospatial queries. Its reported gains span defined public-health, food-security, and outbreak tasks, not general intelligence or self-improvement.",
+        "es": "Google Research presentó el experimental Planetary Prediction Engine, que recupera datos, crea variables y entrena y evalúa modelos a partir de consultas geoespaciales. Sus mejoras comunicadas abarcan tareas definidas de salud pública, seguridad alimentaria y brotes, no inteligencia general ni automejora."
       }
     },
     {
-      "href": "https://research.google/blog/seeing-beyond-bmi-estimating-cardiometabolic-risk-with-smartphone-imagery/",
+      "href": "https://research.google/blog/glucofm-foundation-model-for-continuous-glucose-monitoring/",
       "publisher": "Google Research",
-      "publishedAt": "2026-08-17",
+      "publishedAt": "2026-08-26",
       "headline": {
-        "en": "Google Research reported smartphone-image estimates of cardiometabolic risk",
-        "es": "Google Research informó estimaciones de riesgo cardiometabólico a partir de imágenes de teléfonos inteligentes"
+        "en": "Google Research reported a foundation model for continuous glucose monitoring",
+        "es": "Google Research presentó un modelo fundacional para la monitorización continua de glucosa"
       },
       "label": {
-        "en": "A narrow clinical lens",
-        "es": "Una lente clínica acotada"
+        "en": "Metabolism, narrowly modelled",
+        "es": "Metabolismo, modelado de forma acotada"
       },
       "summary": {
-        "en": "Google Research demonstrated PhotoScan, a deep-learning approach that estimates body composition from smartphone photos and predicted insulin resistance with accuracy comparable to DXA scans in a clinical research setting. This is a bounded feasibility result, not broad autonomous intelligence.",
-        "es": "Google Research demostró PhotoScan, un enfoque de aprendizaje profundo que estima la composición corporal con fotos de teléfonos inteligentes y predijo la resistencia a la insulina con una precisión comparable a las exploraciones DXA en un entorno de investigación clínica. Es un resultado de viabilidad acotado, no inteligencia autónoma amplia."
+        "en": "Google Research introduced GlucoFM, a self-supervised model for continuous glucose-monitoring data. Across its evaluated metabolic prediction tasks it outperformed the reported CGM baselines, but this is a clinical modelling result rather than broad autonomous intelligence.",
+        "es": "Google Research presentó GlucoFM, un modelo autosupervisado para datos de monitorización continua de glucosa. En las tareas evaluadas de predicción metabólica superó las líneas base de CGM comunicadas, pero es un resultado de modelado clínico, no inteligencia autónoma amplia."
       }
     }
   ]
