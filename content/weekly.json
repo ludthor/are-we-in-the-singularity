@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 35,
-  "reviewedAt": "2026-08-31",
+  "issue": 36,
+  "reviewedAt": "2026-09-07",
   "verdict": "NO",
   "subtitle": {
-    "en": "The agents can operate lab equipment and forecast the planet. The keys remain on a very short lanyard.",
-    "es": "Los agentes pueden operar equipos de laboratorio y predecir el planeta. Las llaves siguen con una correa muy corta."
+    "en": "The models forecast, code, and tackle open mathematics. The apocalypse calendar remains delightfully unbooked.",
+    "es": "Los modelos pronostican, programan y abordan matemáticas abiertas. El calendario del apocalipsis sigue, felizmente, sin reservas."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The evidence covers geospatial modelling, metabolic prediction, and laboratory-device control; it does not establish reliable best-human performance across most consequential cognitive domains.",
-        "es": "Las pruebas abarcan el modelado geoespacial, la predicción metabólica y el control de equipos de laboratorio; no establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
+        "en": "The evidence covers time-series forecasting, a narrow set of formalized mathematics problems, and enterprise safeguards; it does not establish reliable best-human performance across most consequential cognitive domains.",
+        "es": "Las pruebas abarcan pronóstico de series temporales, un conjunto acotado de problemas matemáticos formalizados y salvaguardas empresariales; no establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reported systems automate bounded modelling or instrument workflows, but no source verifies a system autonomously improving its own capabilities in a closed loop.",
-        "es": "Los sistemas descritos automatizan flujos acotados de modelado o instrumentación, pero ninguna fuente verifica que un sistema mejore autónomamente sus propias capacidades en un bucle cerrado."
+        "en": "The sources report a safeguard deployment, a forecasting model, and benchmark results, but none verifies a system autonomously improving its own capabilities in a closed loop.",
+        "es": "Las fuentes describen un despliegue de salvaguardas, un modelo de pronóstico y resultados de referencia, pero ninguna verifica que un sistema mejore autónomamente sus propias capacidades en un bucle cerrado."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Automated geospatial analysis and laboratory workflows may speed specific work, but no source shows AI-generated improvements making the next round faster or more capable without continued human direction.",
-        "es": "El análisis geoespacial y los flujos de laboratorio automatizados pueden acelerar tareas concretas, pero ninguna fuente muestra mejoras generadas por IA que hagan la siguiente ronda más rápida o capaz sin dirección humana continua."
+        "en": "Forecasting and occasional mathematical solutions may speed specific work, but no source shows AI-generated improvements making the next round faster or more capable without continued human direction.",
+        "es": "El pronóstico y las soluciones matemáticas ocasionales pueden acelerar tareas concretas, pero ninguna fuente muestra mejoras generadas por IA que hagan la siguiente ronda más rápida o capaz sin dirección humana continua."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reported advances in geospatial prediction, metabolic modelling, and laboratory automation remain legible within ordinary forecasts; they do not show a broken forecasting regime.",
-        "es": "Los avances descritos en predicción geoespacial, modelado metabólico y automatización de laboratorio siguen siendo legibles en previsiones convencionales; no muestran un régimen de predicción roto."
+        "en": "The reported advances in safeguards, forecasting, and formal mathematics remain legible within ordinary forecasts; they do not show a broken forecasting regime.",
+        "es": "Los avances descritos en salvaguardas, pronóstico y matemáticas formales siguen siendo legibles en previsiones convencionales; no muestran un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://www.anthropic.com/news/model-hardware-standard-research-preview",
+      "href": "https://www.anthropic.com/news/enterprise-frontier-safeguards",
       "publisher": "Anthropic",
-      "publishedAt": "2026-08-27",
+      "publishedAt": "2026-09-01",
       "headline": {
-        "en": "Anthropic opened a research preview of a standard for agents to operate physical devices",
-        "es": "Anthropic abrió una vista previa de investigación de un estándar para que los agentes operen dispositivos físicos"
+        "en": "Anthropic announced Enterprise Frontier Safeguards for customer-controlled data",
+        "es": "Anthropic anunció Enterprise Frontier Safeguards para datos controlados por clientes"
       },
       "label": {
-        "en": "Hardware, with guardrails",
-        "es": "Hardware, con barandillas"
+        "en": "Safeguards with a ledger",
+        "es": "Salvaguardas con registro"
       },
       "summary": {
-        "en": "Anthropic opened a research preview of the Model Hardware Standard, a shared specification for agents to operate programmable laboratory and manufacturing devices. It describes bounded, safety-oriented deployment and faster integration—not an agent improving itself.",
-        "es": "Anthropic abrió una vista previa de investigación del Model Hardware Standard, una especificación compartida para que agentes operen dispositivos programables de laboratorio y fabricación. Describe un despliegue acotado y orientado a la seguridad, e integración más rápida; no un agente que se mejore a sí mismo."
+        "en": "Anthropic announced Enterprise Frontier Safeguards, which combines zero data retention with misuse detection by keeping data in customer-controlled cloud infrastructure. It plans phased availability across Claude and partner platforms; this is a deployment safeguard for more capable agents, not evidence of autonomous self-improvement.",
+        "es": "Anthropic anunció Enterprise Frontier Safeguards, que combina retención nula de datos con detección de usos indebidos al mantener los datos en infraestructura en la nube controlada por el cliente. Prevén una disponibilidad gradual en Claude y plataformas asociadas; es una salvaguarda de despliegue para agentes más capaces, no prueba de automejora autónoma."
       }
     },
     {
-      "href": "https://research.google/blog/planetary-prediction-engine-automating-global-models-via-earth-ai/",
+      "href": "https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/",
       "publisher": "Google Research",
-      "publishedAt": "2026-08-27",
+      "publishedAt": "2026-09-03",
       "headline": {
-        "en": "Google Research introduced an autonomous geospatial prediction workflow",
-        "es": "Google Research presentó un flujo autónomo de predicción geoespacial"
+        "en": "Google Research released TimesFM-3 for zero-shot multivariate forecasting",
+        "es": "Google Research lanzó TimesFM-3 para pronóstico multivariante sin ajuste previo"
       },
       "label": {
-        "en": "Planetary analytics, bounded",
-        "es": "Analítica planetaria acotada"
+        "en": "Forecasting, with context",
+        "es": "Pronóstico, con contexto"
       },
       "summary": {
-        "en": "Google Research introduced the experimental Planetary Prediction Engine, which retrieves data, engineers features, trains and evaluates models from geospatial queries. Its reported gains span defined public-health, food-security, and outbreak tasks, not general intelligence or self-improvement.",
-        "es": "Google Research presentó el experimental Planetary Prediction Engine, que recupera datos, crea variables y entrena y evalúa modelos a partir de consultas geoespaciales. Sus mejoras comunicadas abarcan tareas definidas de salud pública, seguridad alimentaria y brotes, no inteligencia general ni automejora."
+        "en": "Google Research released TimesFM-3, a zero-shot foundation model that forecasts multiple related time series while incorporating known future covariates. Google reports the top rank among pretrained foundation models on three public forecasting benchmarks, a bounded prediction result rather than general intelligence or self-improvement.",
+        "es": "Google Research lanzó TimesFM-3, un modelo fundacional sin ajuste previo que pronostica varias series temporales relacionadas e incorpora covariables futuras conocidas. Google comunica el primer puesto entre modelos fundacionales preentrenados en tres referencias públicas de pronóstico; es un resultado de predicción acotado, no inteligencia general ni automejora."
       }
     },
     {
-      "href": "https://research.google/blog/glucofm-foundation-model-for-continuous-glucose-monitoring/",
-      "publisher": "Google Research",
-      "publishedAt": "2026-08-26",
+      "href": "https://epoch.ai/latest/announcing-frontiermath-erdos",
+      "publisher": "Epoch AI",
+      "publishedAt": "2026-09-01",
       "headline": {
-        "en": "Google Research reported a foundation model for continuous glucose monitoring",
-        "es": "Google Research presentó un modelo fundacional para la monitorización continua de glucosa"
+        "en": "Epoch AI introduced FrontierMath Erdős, a benchmark of formalized open problems",
+        "es": "Epoch AI presentó FrontierMath Erdős, una referencia de problemas abiertos formalizados"
       },
       "label": {
-        "en": "Metabolism, narrowly modelled",
-        "es": "Metabolismo, modelado de forma acotada"
+        "en": "Open maths, measured carefully",
+        "es": "Matemáticas abiertas, medidas con cuidado"
       },
       "summary": {
-        "en": "Google Research introduced GlucoFM, a self-supervised model for continuous glucose-monitoring data. Across its evaluated metabolic prediction tasks it outperformed the reported CGM baselines, but this is a clinical modelling result rather than broad autonomous intelligence.",
-        "es": "Google Research presentó GlucoFM, un modelo autosupervisado para datos de monitorización continua de glucosa. En las tareas evaluadas de predicción metabólica superó las líneas base de CGM comunicadas, pero es un resultado de modelado clínico, no inteligencia autónoma amplia."
+        "en": "Epoch AI introduced FrontierMath Erdős: 68 significant Erdős problems that were open in August 2026, formalized in Lean and evaluated under a fixed budget. Its initial run found GPT-6 Astra solved 2 of 68 while four other tested models solved none, documenting rare rather than general mathematical breakthroughs.",
+        "es": "Epoch AI presentó FrontierMath Erdős: 68 problemas significativos de Erdős que seguían abiertos en agosto de 2026, formalizados en Lean y evaluados con un presupuesto fijo. Su prueba inicial halló que GPT-6 Astra resolvió 2 de 68 y que otros cuatro modelos no resolvieron ninguno; documenta avances matemáticos poco frecuentes, no generales."
       }
     }
   ]
