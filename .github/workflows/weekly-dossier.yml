@@ -143,9 +143,39 @@ jobs:
           PREVIOUS_WEEKLY: ${{ runner.temp }}/weekly.previous.json
         run: cp content/weekly.json "$PREVIOUS_WEEKLY"
 
+      - name: Add exact research dates to the bounded prompt
+        id: prompt
+        if: steps.baseline.outcome == 'success'
+        continue-on-error: true
+        env:
+          BASE_PROMPT: .github/codex/prompts/weekly-dossier.md
+          PREVIOUS_WEEKLY: ${{ runner.temp }}/weekly.previous.json
+          REVIEW_DATE: ${{ needs.preflight.outputs.review_date }}
+          RUNTIME_PROMPT: ${{ runner.temp }}/weekly-dossier-prompt.md
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from "node:fs/promises";
+          import { genuinelyNewDateBounds } from "./automation/validate-weekly-proposal.mjs";
+          const previous = JSON.parse(await readFile(process.env.PREVIOUS_WEEKLY, "utf8"));
+          const bounds = genuinelyNewDateBounds(previous.reviewedAt, process.env.REVIEW_DATE);
+          const basePrompt = await readFile(process.env.BASE_PROMPT, "utf8");
+          const exactDates = [
+            "",
+            "## Fixed date bounds for this run",
+            "",
+            `- Previous approved reviewedAt: ${previous.reviewedAt}`,
+            `- New reviewedAt: ${process.env.REVIEW_DATE}`,
+            `- Genuinely new publishedAt interval (inclusive): ${bounds.earliest} through ${bounds.latest}`,
+            "- Any source published outside that exact interval is not genuinely new.",
+            "",
+          ].join("\n");
+          await writeFile(process.env.RUNTIME_PROMPT, `${basePrompt.trimEnd()}\n${exactDates}`);
+          console.log(`Genuinely new sources must be dated ${bounds.earliest} through ${bounds.latest}.`);
+          NODE
+
       - name: Prepare the single-file Codex permission profile
         id: codex_config
-        if: steps.baseline.outcome == 'success'
+        if: steps.prompt.outcome == 'success'
         continue-on-error: true
         env:
           CODEX_HOME_DIR: ${{ runner.temp }}/codex-home
@@ -160,7 +190,9 @@ jobs:
         uses: openai/codex-action@v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          prompt-file: .github/codex/prompts/weekly-dossier.md
+          prompt-file: ${{ runner.temp }}/weekly-dossier-prompt.md
+          output-file: ${{ runner.temp }}/weekly-editor-result.json
+          output-schema-file: .github/codex/schemas/weekly-dossier-output.json
           codex-home: ${{ runner.temp }}/codex-home
           permission-profile: weekly-editor
           model: gpt-5.6-terra
@@ -169,33 +201,20 @@ jobs:
           codex-args: '["--ephemeral", "--strict-config"]'
           allow-users: ludthor
 
-      - name: Enforce the content-only change boundary
-        id: scope
+      - name: Classify the editor result and enforce the change boundary
+        id: editor_result
         if: steps.codex.outcome == 'success'
         continue-on-error: true
+        env:
+          EDITOR_RESULT: ${{ runner.temp }}/weekly-editor-result.json
         run: |
-          node --input-type=module <<'NODE'
-          import { execFileSync } from "node:child_process";
-          const status = execFileSync(
-            "git",
-            ["status", "--porcelain=v1", "--untracked-files=all"],
-            { encoding: "utf8" },
-          );
-          const entries = status.split("\n").filter(Boolean);
-          if (
-            entries.length !== 1 ||
-            !/^(?: M|M |MM|A |AM|\?\?) content\/weekly\.json$/.test(entries[0])
-          ) {
-            console.error("Expected exactly one changed path: content/weekly.json");
-            console.error(status || "No files changed.");
-            process.exit(1);
-          }
-          execFileSync("git", ["diff", "--check"], { stdio: "inherit" });
-          NODE
+          node automation/classify-weekly-editor-result.mjs "$EDITOR_RESULT"
 
       - name: Compare freshness, novelty, and carryovers
         id: proposal
-        if: steps.scope.outcome == 'success'
+        if: >-
+          steps.editor_result.outcome == 'success' &&
+          steps.editor_result.outputs.kind == 'proposal'
         continue-on-error: true
         env:
           METADATA: ${{ runner.temp }}/weekly-metadata.json
@@ -264,15 +283,21 @@ jobs:
           elif [ "${{ steps.baseline.outcome }}" != "success" ]; then
             stage="baseline"
             detail="The approved content/weekly.json baseline could not be preserved."
+          elif [ "${{ steps.prompt.outcome }}" != "success" ]; then
+            stage="research-prompt"
+            detail="The exact run-specific research date bounds could not be prepared."
           elif [ "${{ steps.codex_config.outcome }}" != "success" ]; then
             stage="codex-permissions"
             detail="The single-file Codex permission profile could not be prepared."
           elif [ "${{ steps.codex.outcome }}" != "success" ]; then
             stage="codex"
             detail="The Codex research/editor action failed."
-          elif [ "${{ steps.scope.outcome }}" != "success" ]; then
+          elif [ "${{ steps.editor_result.outcome }}" != "success" ]; then
             stage="scope"
-            detail="Codex did not leave exactly one change to content/weekly.json."
+            detail="Codex returned an invalid structured result or changed an unauthorized path."
+          elif [ "${{ steps.editor_result.outputs.kind }}" = "editorial-shortage" ]; then
+            stage="editorial-shortage"
+            detail="Verified research could not assemble the mandatory weekly dossier without weakening novelty or source checks."
           elif [ "${{ steps.proposal.outcome }}" != "success" ]; then
             stage="freshness"
             detail="The proposal failed issue, date, novelty, carryover, or source-age checks."
@@ -509,7 +534,35 @@ jobs:
               rawDetail || "See the failed job logs for the exact error.",
               1000,
             );
-            const codexMessage = sanitize(process.env.CODEX_FINAL_MESSAGE);
+            const formatCodexMessage = (value) => {
+              const raw = String(value || "");
+              try {
+                const result = JSON.parse(raw);
+                if (!result || typeof result !== "object") return raw;
+                const lines = [
+                  `Outcome: ${result.outcome || "unavailable"}`,
+                  `Summary: ${result.summary || "unavailable"}`,
+                ];
+                if (result.shortage) lines.push(`Shortage: ${result.shortage}`);
+                if (Array.isArray(result.candidateRejections)) {
+                  lines.push("Candidate rejections:");
+                  for (const candidate of result.candidateRejections) {
+                    const source = candidate.url || "No final URL";
+                    lines.push(`- ${source} — ${candidate.reason || "No reason supplied"}`);
+                  }
+                }
+                if (Array.isArray(result.storyClassifications) && result.storyClassifications.length > 0) {
+                  lines.push("Story classifications:");
+                  for (const story of result.storyClassifications) {
+                    lines.push(`- ${story.classification}: ${story.url} (${story.publishedAt})`);
+                  }
+                }
+                return lines.join("\n");
+              } catch {
+                return raw;
+              }
+            };
+            const codexMessage = sanitize(formatCodexMessage(process.env.CODEX_FINAL_MESSAGE));
             const releaseState = process.env.DEPLOY_RESULT === "failure"
               ? "The validated pull request was merged, but production still serves the previous successful deployment. Retry the deployment workflow after fixing the linked error."
               : "No pull request was merged or deployed. Inspect the linked run before retrying.";
