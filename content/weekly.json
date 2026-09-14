@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 36,
-  "reviewedAt": "2026-09-07",
+  "issue": 37,
+  "reviewedAt": "2026-09-14",
   "verdict": "NO",
   "subtitle": {
-    "en": "The models forecast, code, and tackle open mathematics. The apocalypse calendar remains delightfully unbooked.",
-    "es": "Los modelos pronostican, programan y abordan matemáticas abiertas. El calendario del apocalipsis sigue, felizmente, sin reservas."
+    "en": "The chips are counted, the context is timed, and misuse is disrupted. The apocalypse calendar remains unscheduled.",
+    "es": "Se cuentan los chips, se mide el contexto y se frena el uso indebido. El calendario del apocalipsis sigue sin fecha."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The evidence covers time-series forecasting, a narrow set of formalized mathematics problems, and enterprise safeguards; it does not establish reliable best-human performance across most consequential cognitive domains.",
-        "es": "Las pruebas abarcan pronóstico de series temporales, un conjunto acotado de problemas matemáticos formalizados y salvaguardas empresariales; no establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
+        "en": "The evidence measures chip use, long-context latency, and detected misuse; it does not establish reliable best-human performance across most consequential cognitive domains.",
+        "es": "Las pruebas miden uso de chips, latencia de contexto largo y usos indebidos detectados; no establecen rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The sources report a safeguard deployment, a forecasting model, and benchmark results, but none verifies a system autonomously improving its own capabilities in a closed loop.",
-        "es": "Las fuentes describen un despliegue de salvaguardas, un modelo de pronóstico y resultados de referencia, pero ninguna verifica que un sistema mejore autónomamente sus propias capacidades en un bucle cerrado."
+        "en": "The sources report measurements and threat-response work, but none verifies a system autonomously improving its own capabilities in a closed loop.",
+        "es": "Las fuentes describen mediciones y respuesta a amenazas, pero ninguna verifica que un sistema mejore autónomamente sus propias capacidades en un bucle cerrado."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Forecasting and occasional mathematical solutions may speed specific work, but no source shows AI-generated improvements making the next round faster or more capable without continued human direction.",
-        "es": "El pronóstico y las soluciones matemáticas ocasionales pueden acelerar tareas concretas, pero ninguna fuente muestra mejoras generadas por IA que hagan la siguiente ronda más rápida o capaz sin dirección humana continua."
+        "en": "Better visibility into compute and latency may inform engineering, but no source shows AI-generated improvements making the next round faster or more capable without continued human direction.",
+        "es": "Una mejor visibilidad del cómputo y la latencia puede orientar la ingeniería, pero ninguna fuente muestra mejoras generadas por IA que hagan la siguiente ronda más rápida o capaz sin dirección humana continua."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reported advances in safeguards, forecasting, and formal mathematics remain legible within ordinary forecasts; they do not show a broken forecasting regime.",
-        "es": "Los avances descritos en salvaguardas, pronóstico y matemáticas formales siguen siendo legibles en previsiones convencionales; no muestran un régimen de predicción roto."
+        "en": "The reported measurements and misuse disruptions remain legible within ordinary forecasts; they do not show a broken forecasting regime.",
+        "es": "Las mediciones y las interrupciones de usos indebidos descritas siguen siendo legibles en previsiones convencionales; no muestran un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://www.anthropic.com/news/enterprise-frontier-safeguards",
+      "href": "https://www.anthropic.com/threat-intelligence-report-september-2026",
       "publisher": "Anthropic",
-      "publishedAt": "2026-09-01",
+      "publishedAt": "2026-09-10",
       "headline": {
-        "en": "Anthropic announced Enterprise Frontier Safeguards for customer-controlled data",
-        "es": "Anthropic anunció Enterprise Frontier Safeguards para datos controlados por clientes"
+        "en": "Anthropic reported disrupting malicious uses of Claude across seven harm areas",
+        "es": "Anthropic informó de la interrupción de usos maliciosos de Claude en siete áreas de daño"
       },
       "label": {
-        "en": "Safeguards with a ledger",
-        "es": "Salvaguardas con registro"
+        "en": "Misuse, interrupted",
+        "es": "Uso indebido, interrumpido"
       },
       "summary": {
-        "en": "Anthropic announced Enterprise Frontier Safeguards, which combines zero data retention with misuse detection by keeping data in customer-controlled cloud infrastructure. It plans phased availability across Claude and partner platforms; this is a deployment safeguard for more capable agents, not evidence of autonomous self-improvement.",
-        "es": "Anthropic anunció Enterprise Frontier Safeguards, que combina retención nula de datos con detección de usos indebidos al mantener los datos en infraestructura en la nube controlada por el cliente. Prevén una disponibilidad gradual en Claude y plataformas asociadas; es una salvaguarda de despliegue para agentes más capaces, no prueba de automejora autónoma."
+        "en": "Anthropic's Threat Intelligence team reported disrupting operations that attempted to use Claude for malicious activity between December 2025 and August 2026. The case studies cover seven harm areas, including cyber operations and biological misuse; they document adversarial use and safeguards, not autonomous capability improvement.",
+        "es": "El equipo de inteligencia de amenazas de Anthropic informó de que interrumpió operaciones que intentaron usar Claude con fines maliciosos entre diciembre de 2025 y agosto de 2026. Los casos abarcan siete áreas de daño, entre ellas operaciones cibernéticas y uso indebido biológico; documentan uso adversarial y salvaguardas, no mejora autónoma de capacidades."
       }
     },
     {
-      "href": "https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/",
-      "publisher": "Google Research",
-      "publishedAt": "2026-09-03",
-      "headline": {
-        "en": "Google Research released TimesFM-3 for zero-shot multivariate forecasting",
-        "es": "Google Research lanzó TimesFM-3 para pronóstico multivariante sin ajuste previo"
-      },
-      "label": {
-        "en": "Forecasting, with context",
-        "es": "Pronóstico, con contexto"
-      },
-      "summary": {
-        "en": "Google Research released TimesFM-3, a zero-shot foundation model that forecasts multiple related time series while incorporating known future covariates. Google reports the top rank among pretrained foundation models on three public forecasting benchmarks, a bounded prediction result rather than general intelligence or self-improvement.",
-        "es": "Google Research lanzó TimesFM-3, un modelo fundacional sin ajuste previo que pronostica varias series temporales relacionadas e incorpora covariables futuras conocidas. Google comunica el primer puesto entre modelos fundacionales preentrenados en tres referencias públicas de pronóstico; es un resultado de predicción acotado, no inteligencia general ni automejora."
-      }
-    },
-    {
-      "href": "https://epoch.ai/latest/announcing-frontiermath-erdos",
+      "href": "https://epoch.ai/latest/introducing-the-ai-chip-users-explorer",
       "publisher": "Epoch AI",
-      "publishedAt": "2026-09-01",
+      "publishedAt": "2026-09-09",
       "headline": {
-        "en": "Epoch AI introduced FrontierMath Erdős, a benchmark of formalized open problems",
-        "es": "Epoch AI presentó FrontierMath Erdős, una referencia de problemas abiertos formalizados"
+        "en": "Epoch AI introduced its AI Chip Users Explorer",
+        "es": "Epoch AI presentó su explorador de usuarios de chips de IA"
       },
       "label": {
-        "en": "Open maths, measured carefully",
-        "es": "Matemáticas abiertas, medidas con cuidado"
+        "en": "Follow the compute",
+        "es": "Siga el cómputo"
       },
       "summary": {
-        "en": "Epoch AI introduced FrontierMath Erdős: 68 significant Erdős problems that were open in August 2026, formalized in Lean and evaluated under a fixed budget. Its initial run found GPT-6 Astra solved 2 of 68 while four other tested models solved none, documenting rare rather than general mathematical breakthroughs.",
-        "es": "Epoch AI presentó FrontierMath Erdős: 68 problemas significativos de Erdős que seguían abiertos en agosto de 2026, formalizados en Lean y evaluados con un presupuesto fijo. Su prueba inicial halló que GPT-6 Astra resolvió 2 de 68 y que otros cuatro modelos no resolvieron ninguno; documenta avances matemáticos poco frecuentes, no generales."
+        "en": "Epoch AI introduced an explorer presenting its estimates of compute use by the world's largest AI developers across research, training, and inference. The new measurement resource covers five leading labs, improving visibility into the hardware basis of frontier AI without showing general intelligence or self-improvement.",
+        "es": "Epoch AI presentó un explorador con sus estimaciones del uso de cómputo de los mayores desarrolladores de IA para investigación, entrenamiento e inferencia. El nuevo recurso de medición cubre cinco laboratorios líderes y mejora la visibilidad de la base de hardware de la IA de frontera, sin demostrar inteligencia general ni automejora."
+      }
+    },
+    {
+      "href": "https://epoch.ai/publications/long-context-latency-scaling-gpt-vs-claude",
+      "publisher": "Epoch AI",
+      "publishedAt": "2026-09-08",
+      "headline": {
+        "en": "Epoch AI measured contrasting long-context latency scaling in GPT and Claude models",
+        "es": "Epoch AI midió escalados de latencia de contexto largo divergentes en modelos GPT y Claude"
+      },
+      "label": {
+        "en": "Context has a stopwatch",
+        "es": "El contexto tiene cronómetro"
+      },
+      "summary": {
+        "en": "Epoch AI measured time to first token with contexts up to one million tokens across four frontier models. It reports quadratic growth for GPT-5.6 Terra and Sol, versus near-linear growth for Claude Sonnet 5 and Opus 5; this is a systems-performance measurement, not evidence of autonomous self-improvement.",
+        "es": "Epoch AI midió el tiempo hasta el primer token con contextos de hasta un millón de tokens en cuatro modelos de frontera. Informa crecimiento cuadrático para GPT-5.6 Terra y Sol, frente a un crecimiento casi lineal para Claude Sonnet 5 y Opus 5; es una medición de rendimiento de sistemas, no prueba de automejora autónoma."
       }
     }
   ]
