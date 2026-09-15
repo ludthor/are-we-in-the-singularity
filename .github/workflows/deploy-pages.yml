@@ -1,4 +1,4 @@
-name: Deploy site to Cloudflare Pages
+name: Deploy site to GitHub Pages
 
 on:
   push:
@@ -37,17 +37,12 @@ on:
         required: false
         default: false
         type: boolean
-    secrets:
-      CLOUDFLARE_ACCOUNT_ID:
-        required: true
-      CLOUDFLARE_API_TOKEN:
-        required: true
 
 permissions:
   contents: read
 
 concurrency:
-  group: production-cloudflare-pages
+  group: production-github-pages
   cancel-in-progress: false
 
 jobs:
@@ -55,21 +50,14 @@ jobs:
     name: Build and deploy the exact commit
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Confirm Cloudflare release secrets are configured
-        env:
-          HAS_CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
-          HAS_CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
-        run: |
-          if [ "$HAS_CLOUDFLARE_ACCOUNT_ID" != "true" ]; then
-            echo "CLOUDFLARE_ACCOUNT_ID is missing from repository Actions secrets." >&2
-            exit 1
-          fi
-          if [ "$HAS_CLOUDFLARE_API_TOKEN" != "true" ]; then
-            echo "CLOUDFLARE_API_TOKEN is missing from repository Actions secrets." >&2
-            exit 1
-          fi
-
       - name: Check out the exact release commit
         uses: actions/checkout@v7
         with:
@@ -103,22 +91,17 @@ jobs:
           test -f dist/client/index.html
           test -f dist/client/es/index.html
 
-      - name: Deploy to the production Pages branch
-        env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: |
-          attempt=1
-          until npx wrangler pages deploy dist/client \
-            --project-name singularity-now \
-            --branch main; do
-            if [ "$attempt" -ge 3 ]; then
-              echo "Cloudflare Pages deployment failed after $attempt attempts." >&2
-              exit 1
-            fi
-            attempt=$((attempt + 1))
-            echo "Retrying Cloudflare Pages deployment (attempt $attempt of 3)." >&2
-          done
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/client
+
+      - name: Deploy the GitHub Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
 
       - name: Verify both production routes respond
         run: |
@@ -139,8 +122,8 @@ jobs:
             echo "Production route $route did not serve the expected weekly source after deployment." >&2
             return 1
           }
-          verify_route https://singularity-now.pages.dev/
-          verify_route https://singularity-now.pages.dev/es/
+          verify_route https://singularity.ludthor.es/
+          verify_route https://singularity.ludthor.es/es/
 
   recover:
     name: Close standing release failures after success
@@ -206,13 +189,13 @@ jobs:
           script: |
             const title = "[automation] Production deployment failure";
             const body = [
-              "## Cloudflare Pages deployment failed",
+              "## GitHub Pages deployment failed",
               "",
               `- Commit: \`${process.env.COMMIT_SHA}\``,
               `- Run: ${process.env.RUN_URL}`,
               "- Production continues serving the previous successful deployment.",
               "",
-              "Fix the linked error, then manually run **Deploy site to Cloudflare Pages** to retry the same commit without repeating weekly research.",
+              "Fix the linked error, then manually run **Deploy site to GitHub Pages** to retry the same commit without repeating weekly research.",
             ].join("\n");
             const issues = await github.paginate(github.rest.issues.listForRepo, {
               owner: context.repo.owner,

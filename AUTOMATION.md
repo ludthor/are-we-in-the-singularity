@@ -101,9 +101,9 @@ passes through the same automated validation, merge, and deployment gates.
 - The Codex research job receives no GitHub write credential. A separate fixed
   publishing job receives the short-lived `GITHUB_TOKEN` only after every gate
   passes.
-- Before paid research begins, confirm that both Cloudflare deployment secrets
-  are configured. Do not expose either value in logs, artifacts, pull requests,
-  issues, or general workflow environment variables.
+- GitHub Pages deployment uses the workflow run's short-lived `GITHUB_TOKEN`
+  plus an OIDC identity token. No hosting-provider credential is stored or
+  exposed to the research or publishing jobs.
 - Codex command traffic runs through its network proxy and may reach only the
   apex domains and subdomains represented by
   `automation/weekly-schema.mjs#ALLOWED_SOURCE_DOMAINS`; no global network
@@ -112,9 +112,9 @@ passes through the same automated validation, merge, and deployment gates.
   concrete `content` directory, whose only tracked file is `weekly.json`.
   The next fixed gate rejects every changed path except `content/weekly.json`;
   ignored dependencies and Git metadata are not writable during research.
-- The fixed deployment workflow receives the Cloudflare credentials only for
-  the Direct Upload command. It checks out the merge commit by SHA, installs the
-  committed lockfile, validates content, and creates a fresh static export.
+- The fixed deployment workflow checks out the merge commit by SHA, installs
+  the committed lockfile, validates content, creates a fresh static export, and
+  uploads only `dist/client` as the GitHub Pages artifact.
 
 ## Validation and automated release
 
@@ -132,12 +132,12 @@ passes through the same automated validation, merge, and deployment gates.
    stories in the pull request. Record the passed checks for minimum novelty,
    source links and dates, honest carryovers, translations, four criteria,
    verdict, subtitle, and content-only scope.
-9. Build the Cloudflare Pages static export before merging. Confirm the PR head
+9. Build the GitHub Pages static export before merging. Confirm the PR head
    commit still matches the validated commit, mark it ready, and squash-merge
    it without an approving review.
 10. Check out the returned merge commit by SHA, repeat the committed dependency
-    install, content validation, and static build, then deploy `dist/client` to
-    the `singularity-now` Cloudflare Pages production branch.
+    install, content validation, and static build, then upload and deploy
+    `dist/client` through the `github-pages` environment.
 11. Close standing weekly and deployment failure issues only after production
     deployment succeeds. On any failure, create or refresh an issue assigned to
     `ludthor` with the failed stage and Actions run link.
