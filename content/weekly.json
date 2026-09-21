@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 37,
-  "reviewedAt": "2026-09-14",
+  "issue": 38,
+  "reviewedAt": "2026-09-21",
   "verdict": "NO",
   "subtitle": {
-    "en": "The chips are counted, the context is timed, and misuse is disrupted. The apocalypse calendar remains unscheduled.",
-    "es": "Se cuentan los chips, se mide el contexto y se frena el uso indebido. El calendario del apocalipsis sigue sin fecha."
+    "en": "Retrieval got lighter, benchmarks shuffled, and yardsticks multiplied. The singularity still has forms to file.",
+    "es": "La recuperación se aligeró, los benchmarks se reordenaron y los baremos se multiplicaron. La singularidad aún tiene formularios que presentar."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The evidence measures chip use, long-context latency, and detected misuse; it does not establish reliable best-human performance across most consequential cognitive domains.",
-        "es": "Las pruebas miden uso de chips, latencia de contexto largo y usos indebidos detectados; no establecen rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos cognitivos relevantes."
+        "en": "Retrieve-for-Train concerns specialized retrieval, Epoch's index still shows uneven math and software-engineering results, and Anthropic reports process metrics; none establishes reliable best-human performance across most consequential domains.",
+        "es": "Retrieve-for-Train se ocupa de recuperación especializada, el índice de Epoch aún muestra resultados desiguales en matemáticas e ingeniería de software, y Anthropic informa métricas de proceso; nada establece rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The sources report measurements and threat-response work, but none verifies a system autonomously improving its own capabilities in a closed loop.",
-        "es": "Las fuentes describen mediciones y respuesta a amenazas, pero ninguna verifica que un sistema mejore autónomamente sus propias capacidades en un bucle cerrado."
+        "en": "The sources describe an offline training method, benchmark measurements, and oversight metrics for AI-assisted R&D; none verifies a system autonomously improving its own capabilities in a closed loop.",
+        "es": "Las fuentes describen un método de entrenamiento fuera de línea, mediciones de benchmarks y métricas de supervisión para I+D asistida por IA; ninguna verifica que un sistema mejore autónomamente sus capacidades en un bucle cerrado."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Better visibility into compute and latency may inform engineering, but no source shows AI-generated improvements making the next round faster or more capable without continued human direction.",
-        "es": "Una mejor visibilidad del cómputo y la latencia puede orientar la ingeniería, pero ninguna fuente muestra mejoras generadas por IA que hagan la siguiente ronda más rápida o capaz sin dirección humana continua."
+        "en": "The reported retrieval technique, benchmark update, and proposed reporting measures may aid engineering and oversight, but none shows AI-generated improvements sustaining faster or more capable subsequent rounds without continued human direction.",
+        "es": "La técnica de recuperación, la actualización del benchmark y las medidas de reporte propuestas pueden ayudar a la ingeniería y la supervisión, pero ninguna muestra mejoras generadas por IA que sostengan rondas posteriores más rápidas o capaces sin dirección humana continua."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reported measurements and misuse disruptions remain legible within ordinary forecasts; they do not show a broken forecasting regime.",
-        "es": "Las mediciones y las interrupciones de usos indebidos descritas siguen siendo legibles en previsiones convencionales; no muestran un régimen de predicción roto."
+        "en": "A targeted systems method, updated benchmark scores, and proposed oversight measurements remain legible within ordinary technical and institutional forecasts; they do not show a broken forecasting regime.",
+        "es": "Un método de sistemas específico, puntuaciones de benchmark actualizadas y mediciones de supervisión propuestas siguen siendo legibles en previsiones técnicas e institucionales convencionales; no muestran un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+      "href": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
       "publisher": "Anthropic",
-      "publishedAt": "2026-09-10",
+      "publishedAt": "2026-09-17",
       "headline": {
-        "en": "Anthropic reported disrupting malicious uses of Claude across seven harm areas",
-        "es": "Anthropic informó de la interrupción de usos maliciosos de Claude en siete áreas de daño"
+        "en": "Anthropic proposed measurements for monitoring the pace of frontier AI development",
+        "es": "Anthropic propuso mediciones para seguir el ritmo del desarrollo de IA de frontera"
       },
       "label": {
-        "en": "Misuse, interrupted",
-        "es": "Uso indebido, interrumpido"
+        "en": "Watch the workshop",
+        "es": "Vigile el taller"
       },
       "summary": {
-        "en": "Anthropic's Threat Intelligence team reported disrupting operations that attempted to use Claude for malicious activity between December 2025 and August 2026. The case studies cover seven harm areas, including cyber operations and biological misuse; they document adversarial use and safeguards, not autonomous capability improvement.",
-        "es": "El equipo de inteligencia de amenazas de Anthropic informó de que interrumpió operaciones que intentaron usar Claude con fines maliciosos entre diciembre de 2025 y agosto de 2026. Los casos abarcan siete áreas de daño, entre ellas operaciones cibernéticas y uso indebido biológico; documentan uso adversarial y salvaguardas, no mejora autónoma de capacidades."
+        "en": "Anthropic proposed reporting coverage, review latency, and escalation rates for agents working on AI research and engineering. It also described a system for overseeing and intervening in agent actions. These are transparency and oversight measures, not evidence that an AI system autonomously builds its successor.",
+        "es": "Anthropic propuso informar sobre cobertura, latencia de revisión y tasas de escalada de agentes que trabajan en investigación e ingeniería de IA. También describió un sistema para supervisar e intervenir en acciones de agentes. Son medidas de transparencia y supervisión, no pruebas de que un sistema de IA construya autónomamente a su sucesor."
       }
     },
     {
-      "href": "https://epoch.ai/latest/introducing-the-ai-chip-users-explorer",
+      "href": "https://epoch.ai/data-insights/astra-eci-breakdown",
       "publisher": "Epoch AI",
-      "publishedAt": "2026-09-09",
+      "publishedAt": "2026-09-16",
       "headline": {
-        "en": "Epoch AI introduced its AI Chip Users Explorer",
-        "es": "Epoch AI presentó su explorador de usuarios de chips de IA"
+        "en": "Epoch AI reported GPT-6 Astra leading its composite capability index",
+        "es": "Epoch AI informó de que GPT-6 Astra lidera su índice compuesto de capacidades"
       },
       "label": {
-        "en": "Follow the compute",
-        "es": "Siga el cómputo"
+        "en": "The scorecard moved",
+        "es": "El marcador se movió"
       },
       "summary": {
-        "en": "Epoch AI introduced an explorer presenting its estimates of compute use by the world's largest AI developers across research, training, and inference. The new measurement resource covers five leading labs, improving visibility into the hardware basis of frontier AI without showing general intelligence or self-improvement.",
-        "es": "Epoch AI presentó un explorador con sus estimaciones del uso de cómputo de los mayores desarrolladores de IA para investigación, entrenamiento e inferencia. El nuevo recurso de medición cubre cinco laboratorios líderes y mejora la visibilidad de la base de hardware de la IA de frontera, sin demostrar inteligencia general ni automejora."
+        "en": "Epoch AI reported GPT-6 Astra at 166 on its Epoch Capabilities Index, ahead of Claude Fable 5.1 at 164 and GPT-5.6 Sol at 162. Astra set the reported Math-ECI record, while Fable led the reported software-engineering index; the mixed benchmark result does not establish general superhuman ability.",
+        "es": "Epoch AI informó de 166 para GPT-6 Astra en su Índice de Capacidades de Epoch, por delante de Claude Fable 5.1 con 164 y GPT-5.6 Sol con 162. Astra marcó el récord comunicado en Math-ECI, mientras Fable lideró el índice comunicado de ingeniería de software; el resultado mixto de benchmarks no establece capacidad superhumana general."
       }
     },
     {
-      "href": "https://epoch.ai/publications/long-context-latency-scaling-gpt-vs-claude",
-      "publisher": "Epoch AI",
-      "publishedAt": "2026-09-08",
+      "href": "https://research.google/blog/bypassing-inference-bottlenecks-accelerating-complex-ai-search-with-retrieve-for-train/",
+      "publisher": "Google Research",
+      "publishedAt": "2026-09-15",
       "headline": {
-        "en": "Epoch AI measured contrasting long-context latency scaling in GPT and Claude models",
-        "es": "Epoch AI midió escalados de latencia de contexto largo divergentes en modelos GPT y Claude"
+        "en": "Google Research described Retrieve-for-Train for lower-overhead complex retrieval",
+        "es": "Google Research describió Retrieve-for-Train para recuperación compleja con menor sobrecarga"
       },
       "label": {
-        "en": "Context has a stopwatch",
-        "es": "El contexto tiene cronómetro"
+        "en": "Search, packed for travel",
+        "es": "Búsqueda, lista para viajar"
       },
       "summary": {
-        "en": "Epoch AI measured time to first token with contexts up to one million tokens across four frontier models. It reports quadratic growth for GPT-5.6 Terra and Sol, versus near-linear growth for Claude Sonnet 5 and Opus 5; this is a systems-performance measurement, not evidence of autonomous self-improvement.",
-        "es": "Epoch AI midió el tiempo hasta el primer token con contextos de hasta un millón de tokens en cuatro modelos de frontera. Informa crecimiento cuadrático para GPT-5.6 Terra y Sol, frente a un crecimiento casi lineal para Claude Sonnet 5 y Opus 5; es una medición de rendimiento de sistemas, no prueba de automejora autónoma."
+        "en": "Google Research described Retrieve-for-Train, which uses reinforcement learning offline to turn reward-driven exploration into training data, then distills the behavior into a lightweight diffusion prior for retrieval. The work targets inference latency and compute overhead in specialized retrieval, rather than autonomous improvement of a general-purpose system.",
+        "es": "Google Research describió Retrieve-for-Train, que usa aprendizaje por refuerzo fuera de línea para convertir la exploración guiada por recompensas en datos de entrenamiento y después destila el comportamiento en un prior de difusión ligero para recuperación. El trabajo apunta a la latencia y la sobrecarga de cómputo en recuperación especializada, no a la mejora autónoma de un sistema de propósito general."
       }
     }
   ]
