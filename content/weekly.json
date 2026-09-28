@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 38,
-  "reviewedAt": "2026-09-21",
+  "issue": 39,
+  "reviewedAt": "2026-09-28",
   "verdict": "NO",
   "subtitle": {
-    "en": "Retrieval got lighter, benchmarks shuffled, and yardsticks multiplied. The singularity still has forms to file.",
-    "es": "La recuperación se aligeró, los benchmarks se reordenaron y los baremos se multiplicaron. La singularidad aún tiene formularios que presentar."
+    "en": "Enzymes, robots, and video crews acquired more helpers. The singularity is still waiting for a badge.",
+    "es": "Enzimas, robots y equipos de vídeo ganaron ayudantes. La singularidad sigue esperando su acreditación."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Retrieve-for-Train concerns specialized retrieval, Epoch's index still shows uneven math and software-engineering results, and Anthropic reports process metrics; none establishes reliable best-human performance across most consequential domains.",
-        "es": "Retrieve-for-Train se ocupa de recuperación especializada, el índice de Epoch aún muestra resultados desiguales en matemáticas e ingeniería de software, y Anthropic informa métricas de proceso; nada establece rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
+        "en": "The sources report a biology finding, lower-latency robot inference, and a video-production framework. These are bounded applications and evaluations, not reliable best-human performance across most consequential domains.",
+        "es": "Las fuentes informan de un hallazgo biológico, inferencia robótica de menor latencia y un marco de producción de vídeo. Son aplicaciones y evaluaciones acotadas, no rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The sources describe an offline training method, benchmark measurements, and oversight metrics for AI-assisted R&D; none verifies a system autonomously improving its own capabilities in a closed loop.",
-        "es": "Las fuentes describen un método de entrenamiento fuera de línea, mediciones de benchmarks y métricas de supervisión para I+D asistida por IA; ninguna verifica que un sistema mejore autónomamente sus capacidades en un bucle cerrado."
+        "en": "Claude agents searched biological data, and Google's framework refines video-generation choices, but neither is evidence of a system autonomously improving its own general capabilities in a closed loop; the robotics work is an inference deployment study.",
+        "es": "Los agentes de Claude buscaron en datos biológicos y el marco de Google refina decisiones de generación de vídeo, pero ninguno prueba que un sistema mejore de forma autónoma sus propias capacidades generales en un bucle cerrado; el trabajo de robótica es un estudio de despliegue de inferencia."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reported retrieval technique, benchmark update, and proposed reporting measures may aid engineering and oversight, but none shows AI-generated improvements sustaining faster or more capable subsequent rounds without continued human direction.",
-        "es": "La técnica de recuperación, la actualización del benchmark y las medidas de reporte propuestas pueden ayudar a la ingeniería y la supervisión, pero ninguna muestra mejoras generadas por IA que sostengan rondas posteriores más rápidas o capaces sin dirección humana continua."
+        "en": "The reports may improve scientific search, robot execution, and creative workflow, but none shows AI-generated improvements sustaining faster or more capable subsequent rounds without continued human direction and infrastructure.",
+        "es": "Los informes pueden mejorar la búsqueda científica, la ejecución robótica y el flujo creativo, pero ninguno muestra mejoras generadas por IA que sostengan rondas posteriores más rápidas o capaces sin dirección humana e infraestructura continuas."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "A targeted systems method, updated benchmark scores, and proposed oversight measurements remain legible within ordinary technical and institutional forecasts; they do not show a broken forecasting regime.",
-        "es": "Un método de sistemas específico, puntuaciones de benchmark actualizadas y mediciones de supervisión propuestas siguen siendo legibles en previsiones técnicas e institucionales convencionales; no muestran un régimen de predicción roto."
+        "en": "A laboratory result, systems deployment experiment, and creative-generation framework remain legible within ordinary technical forecasts; they do not show a broken forecasting regime.",
+        "es": "Un resultado de laboratorio, un experimento de despliegue de sistemas y un marco de generación creativa siguen siendo legibles en previsiones técnicas habituales; no muestran un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+      "href": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
       "publisher": "Anthropic",
-      "publishedAt": "2026-09-17",
+      "publishedAt": "2026-09-23",
       "headline": {
-        "en": "Anthropic proposed measurements for monitoring the pace of frontier AI development",
-        "es": "Anthropic propuso mediciones para seguir el ritmo del desarrollo de IA de frontera"
+        "en": "Anthropic reported that Claude identified a novel enzyme system with CRISPR-like repeats",
+        "es": "Anthropic informó de que Claude identificó un nuevo sistema enzimático con repeticiones similares a CRISPR"
       },
       "label": {
-        "en": "Watch the workshop",
-        "es": "Vigile el taller"
+        "en": "A lead, not a cure",
+        "es": "Una pista, no una cura"
       },
       "summary": {
-        "en": "Anthropic proposed reporting coverage, review latency, and escalation rates for agents working on AI research and engineering. It also described a system for overseeing and intervening in agent actions. These are transparency and oversight measures, not evidence that an AI system autonomously builds its successor.",
-        "es": "Anthropic propuso informar sobre cobertura, latencia de revisión y tasas de escalada de agentes que trabajan en investigación e ingeniería de IA. También describió un sistema para supervisar e intervenir en acciones de agentes. Son medidas de transparencia y supervisión, no pruebas de que un sistema de IA construya autónomamente a su sucesor."
+        "en": "Anthropic said Claude agents searched DNA-sequence data and identified an array-associated reverse-transcriptase system after roughly 21 hours of search; scientists then tested it in the lab. The system's function remains unknown, so this is a research lead under human-directed experimental validation, not autonomous scientific self-improvement.",
+        "es": "Anthropic afirmó que agentes de Claude buscaron datos de secuencias de ADN e identificaron un sistema de transcriptasa inversa asociado a repeticiones tras unas 21 horas de búsqueda; después, científicos lo probaron en el laboratorio. La función del sistema sigue siendo desconocida, por lo que es una pista de investigación bajo validación experimental dirigida por humanos, no auto-mejora científica autónoma."
       }
     },
     {
-      "href": "https://epoch.ai/data-insights/astra-eci-breakdown",
-      "publisher": "Epoch AI",
-      "publishedAt": "2026-09-16",
+      "href": "https://www.microsoft.com/en-us/research/blog/offloaded-inference-for-real-world-physical-ai-robotics/",
+      "publisher": "Microsoft Research",
+      "publishedAt": "2026-09-23",
       "headline": {
-        "en": "Epoch AI reported GPT-6 Astra leading its composite capability index",
-        "es": "Epoch AI informó de que GPT-6 Astra lidera su índice compuesto de capacidades"
+        "en": "Microsoft Research described offloaded inference for physical AI robotics",
+        "es": "Microsoft Research describió la inferencia externalizada para robótica de IA física"
       },
       "label": {
-        "en": "The scorecard moved",
-        "es": "El marcador se movió"
+        "en": "Compute takes a field trip",
+        "es": "El cómputo sale de excursión"
       },
       "summary": {
-        "en": "Epoch AI reported GPT-6 Astra at 166 on its Epoch Capabilities Index, ahead of Claude Fable 5.1 at 164 and GPT-5.6 Sol at 162. Astra set the reported Math-ECI record, while Fable led the reported software-engineering index; the mixed benchmark result does not establish general superhuman ability.",
-        "es": "Epoch AI informó de 166 para GPT-6 Astra en su Índice de Capacidades de Epoch, por delante de Claude Fable 5.1 con 164 y GPT-5.6 Sol con 162. Astra marcó el récord comunicado en Math-ECI, mientras Fable lideró el índice comunicado de ingeniería de software; el resultado mixto de benchmarks no establece capacidad superhumana general."
+        "en": "Microsoft Research described moving robot inference beyond onboard hardware to reduce latency and support more demanding physical-AI workloads. Its illustrated handover succeeds with low latency and fails when latency is high. This is a systems approach to a deployment bottleneck, not evidence that robots or models improve themselves.",
+        "es": "Microsoft Research describió trasladar la inferencia del robot fuera del hardware integrado para reducir la latencia y admitir cargas de IA física más exigentes. La transferencia ilustrada tiene éxito con baja latencia y falla cuando esta es alta. Es un enfoque de sistemas para un cuello de botella de despliegue, no prueba de que robots o modelos se mejoren a sí mismos."
       }
     },
     {
-      "href": "https://research.google/blog/bypassing-inference-bottlenecks-accelerating-complex-ai-search-with-retrieve-for-train/",
+      "href": "https://research.google/blog/coherent-long-form-video-generation/",
       "publisher": "Google Research",
-      "publishedAt": "2026-09-15",
+      "publishedAt": "2026-09-24",
       "headline": {
-        "en": "Google Research described Retrieve-for-Train for lower-overhead complex retrieval",
-        "es": "Google Research describió Retrieve-for-Train para recuperación compleja con menor sobrecarga"
+        "en": "Google Research introduced a multi-agent framework for coherent long-form video generation",
+        "es": "Google Research presentó un marco multiagente para generar vídeo extenso y coherente"
       },
       "label": {
-        "en": "Search, packed for travel",
-        "es": "Búsqueda, lista para viajar"
+        "en": "Continuity gets a crew",
+        "es": "La continuidad tiene equipo"
       },
       "summary": {
-        "en": "Google Research described Retrieve-for-Train, which uses reinforcement learning offline to turn reward-driven exploration into training data, then distills the behavior into a lightweight diffusion prior for retrieval. The work targets inference latency and compute overhead in specialized retrieval, rather than autonomous improvement of a general-purpose system.",
-        "es": "Google Research describió Retrieve-for-Train, que usa aprendizaje por refuerzo fuera de línea para convertir la exploración guiada por recompensas en datos de entrenamiento y después destila el comportamiento en un prior de difusión ligero para recuperación. El trabajo apunta a la latencia y la sobrecarga de cómputo en recuperación especializada, no a la mejora autónoma de un sistema de propósito general."
+        "en": "Google Research introduced an AI video co-director that coordinates agents for planning, production, and visual evaluation on top of Gemini and Veo. It reported improved multi-shot consistency and minutes-long videos while mitigating drift and pipeline errors. The closed-loop refinement optimizes a bounded creative task, not the system's own general capabilities.",
+        "es": "Google Research presentó un codirector de vídeo con IA que coordina agentes para planificación, producción y evaluación visual sobre Gemini y Veo. Informó de mayor consistencia entre planos y vídeos de varios minutos, al tiempo que mitiga la deriva y los errores de la cadena. El refinamiento en bucle cerrado optimiza una tarea creativa acotada, no las capacidades generales del propio sistema."
       }
     }
   ]
