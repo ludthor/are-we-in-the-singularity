@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 39,
-  "reviewedAt": "2026-09-28",
+  "issue": 40,
+  "reviewedAt": "2026-10-09",
   "verdict": "NO",
   "subtitle": {
-    "en": "Enzymes, robots, and video crews acquired more helpers. The singularity is still waiting for a badge.",
-    "es": "Enzimas, robots y equipos de vídeo ganaron ayudantes. La singularidad sigue esperando su acreditación."
+    "en": "Proofs, pocket models, and patent lawyers moved the needle. The needle remains stubbornly non-singular.",
+    "es": "Pruebas, modelos de bolsillo y abogados de patentes movieron la aguja. La aguja sigue obstinadamente no singular."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The sources report a biology finding, lower-latency robot inference, and a video-production framework. These are bounded applications and evaluations, not reliable best-human performance across most consequential domains.",
-        "es": "Las fuentes informan de un hallazgo biológico, inferencia robótica de menor latencia y un marco de producción de vídeo. Son aplicaciones y evaluaciones acotadas, no rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
+        "en": "The sources show mathematical research, a more capable small model, and improved patent drafting. None demonstrates reliable best-human performance across most consequential domains.",
+        "es": "Las fuentes muestran investigación matemática, un modelo pequeño más capaz y mejores borradores de patentes. Ninguna demuestra un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Claude agents searched biological data, and Google's framework refines video-generation choices, but neither is evidence of a system autonomously improving its own general capabilities in a closed loop; the robotics work is an inference deployment study.",
-        "es": "Los agentes de Claude buscaron en datos biológicos y el marco de Google refina decisiones de generación de vídeo, pero ninguno prueba que un sistema mejore de forma autónoma sus propias capacidades generales en un bucle cerrado; el trabajo de robótica es un estudio de despliegue de inferencia."
+        "en": "OpenAI's model produced mathematical results, Anthropic released an engineered model, and Google's trial measured human learning. None shows an AI autonomously improving its own general capabilities in a closed loop.",
+        "es": "El modelo de OpenAI produjo resultados matemáticos, Anthropic lanzó un modelo diseñado y el ensayo de Google midió el aprendizaje humano. Ninguno muestra una IA mejorando autónomamente sus capacidades generales en un bucle cerrado."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reports may improve scientific search, robot execution, and creative workflow, but none shows AI-generated improvements sustaining faster or more capable subsequent rounds without continued human direction and infrastructure.",
-        "es": "Los informes pueden mejorar la búsqueda científica, la ejecución robótica y el flujo creativo, pero ninguno muestra mejoras generadas por IA que sostengan rondas posteriores más rápidas o capaces sin dirección humana e infraestructura continuas."
+        "en": "The reports may lower research, inference, and professional-work costs, but they do not show AI-generated advances sustaining faster subsequent rounds without continued human direction and infrastructure.",
+        "es": "Los informes pueden reducir costes de investigación, inferencia y trabajo profesional, pero no muestran avances generados por IA que sostengan rondas posteriores más rápidas sin dirección humana e infraestructura continuas."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "A laboratory result, systems deployment experiment, and creative-generation framework remain legible within ordinary technical forecasts; they do not show a broken forecasting regime.",
-        "es": "Un resultado de laboratorio, un experimento de despliegue de sistemas y un marco de generación creativa siguen siendo legibles en previsiones técnicas habituales; no muestran un régimen de predicción roto."
+        "en": "New proofs, benchmark gains, and measured workplace effects are significant but remain quantifiable within ordinary technical and economic analysis; they do not establish a broken forecasting regime.",
+        "es": "Nuevas pruebas, mejoras en evaluaciones y efectos laborales medidos son importantes, pero siguen siendo cuantificables mediante análisis técnicos y económicos habituales; no establecen un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
+      "href": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
+      "publisher": "OpenAI",
+      "publishedAt": "2026-10-06",
+      "headline": {
+        "en": "OpenAI published new mathematical results produced by an internal frontier model",
+        "es": "OpenAI publicó nuevos resultados matemáticos producidos por un modelo de frontera interno"
+      },
+      "label": {
+        "en": "Proof, then review",
+        "es": "Prueba y después revisión"
+      },
+      "summary": {
+        "en": "OpenAI released a collection of mathematical results from an internal frontier model, with Lean formalizations for many proofs, reasoning summaries, attempt statistics, and compute estimates. The disclosure advances AI-assisted mathematics, but the results still require community scrutiny and do not show autonomous general self-improvement.",
+        "es": "OpenAI publicó una colección de resultados matemáticos de un modelo de frontera interno, con formalizaciones en Lean para muchas pruebas, resúmenes de razonamiento, estadísticas de intentos y estimaciones de cómputo. La publicación impulsa las matemáticas asistidas por IA, pero los resultados aún requieren escrutinio de la comunidad y no muestran auto-mejora general autónoma."
+      }
+    },
+    {
+      "href": "https://www.anthropic.com/claude-haiku-5-5",
       "publisher": "Anthropic",
-      "publishedAt": "2026-09-23",
+      "publishedAt": "2026-10-07",
       "headline": {
-        "en": "Anthropic reported that Claude identified a novel enzyme system with CRISPR-like repeats",
-        "es": "Anthropic informó de que Claude identificó un nuevo sistema enzimático con repeticiones similares a CRISPR"
+        "en": "Anthropic released Claude Haiku 5.5 with large benchmark and cost gains",
+        "es": "Anthropic lanzó Claude Haiku 5.5 con grandes mejoras en evaluaciones y coste"
       },
       "label": {
-        "en": "A lead, not a cure",
-        "es": "Una pista, no una cura"
+        "en": "Small model, larger résumé",
+        "es": "Modelo pequeño, currículum mayor"
       },
       "summary": {
-        "en": "Anthropic said Claude agents searched DNA-sequence data and identified an array-associated reverse-transcriptase system after roughly 21 hours of search; scientists then tested it in the lab. The system's function remains unknown, so this is a research lead under human-directed experimental validation, not autonomous scientific self-improvement.",
-        "es": "Anthropic afirmó que agentes de Claude buscaron datos de secuencias de ADN e identificaron un sistema de transcriptasa inversa asociado a repeticiones tras unas 21 horas de búsqueda; después, científicos lo probaron en el laboratorio. La función del sistema sigue siendo desconocida, por lo que es una pista de investigación bajo validación experimental dirigida por humanos, no auto-mejora científica autónoma."
+        "en": "Anthropic says Haiku 5.5 costs about 75% less to run than Haiku 4.5 while scoring 72.4% on an offline OSWorld subset and 39.2% on Terminal-Bench 4.0. The efficiency and capability gains broaden practical agent deployment, but benchmark performance remains bounded and below Anthropic's larger model.",
+        "es": "Anthropic afirma que ejecutar Haiku 5.5 cuesta cerca de un 75 % menos que Haiku 4.5, con un 72,4 % en un subconjunto sin conexión de OSWorld y un 39,2 % en Terminal-Bench 4.0. Las mejoras de eficiencia y capacidad amplían el despliegue práctico de agentes, pero el rendimiento sigue acotado y por debajo del modelo mayor de Anthropic."
       }
     },
     {
-      "href": "https://www.microsoft.com/en-us/research/blog/offloaded-inference-for-real-world-physical-ai-robotics/",
-      "publisher": "Microsoft Research",
-      "publishedAt": "2026-09-23",
-      "headline": {
-        "en": "Microsoft Research described offloaded inference for physical AI robotics",
-        "es": "Microsoft Research describió la inferencia externalizada para robótica de IA física"
-      },
-      "label": {
-        "en": "Compute takes a field trip",
-        "es": "El cómputo sale de excursión"
-      },
-      "summary": {
-        "en": "Microsoft Research described moving robot inference beyond onboard hardware to reduce latency and support more demanding physical-AI workloads. Its illustrated handover succeeds with low latency and fails when latency is high. This is a systems approach to a deployment bottleneck, not evidence that robots or models improve themselves.",
-        "es": "Microsoft Research describió trasladar la inferencia del robot fuera del hardware integrado para reducir la latencia y admitir cargas de IA física más exigentes. La transferencia ilustrada tiene éxito con baja latencia y falla cuando esta es alta. Es un enfoque de sistemas para un cuello de botella de despliegue, no prueba de que robots o modelos se mejoren a sí mismos."
-      }
-    },
-    {
-      "href": "https://research.google/blog/coherent-long-form-video-generation/",
+      "href": "https://research.google/blog/does-better-work-always-mean-better-workers/",
       "publisher": "Google Research",
-      "publishedAt": "2026-09-24",
+      "publishedAt": "2026-10-07",
       "headline": {
-        "en": "Google Research introduced a multi-agent framework for coherent long-form video generation",
-        "es": "Google Research presentó un marco multiagente para generar vídeo extenso y coherente"
+        "en": "Google Research found AI improved patent drafting but not every lawyer's judgment",
+        "es": "Google Research observó que la IA mejoró las patentes, pero no el criterio de todos los abogados"
       },
       "label": {
-        "en": "Continuity gets a crew",
-        "es": "La continuidad tiene equipo"
+        "en": "The apprentice clause",
+        "es": "La cláusula del aprendiz"
       },
       "summary": {
-        "en": "Google Research introduced an AI video co-director that coordinates agents for planning, production, and visual evaluation on top of Gemini and Veo. It reported improved multi-shot consistency and minutes-long videos while mitigating drift and pipeline errors. The closed-loop refinement optimizes a bounded creative task, not the system's own general capabilities.",
-        "es": "Google Research presentó un codirector de vídeo con IA que coordina agentes para planificación, producción y evaluación visual sobre Gemini y Veo. Informó de mayor consistencia entre planos y vídeos de varios minutos, al tiempo que mitiga la deriva y los errores de la cadena. El refinamiento en bucle cerrado optimiza una tarea creativa acotada, no las capacidades generales del propio sistema."
+        "en": "In a three-month randomized trial with 133 patent lawyers at 11 firms, AI access improved drafting quality, while later unassisted judgment gains appeared among senior lawyers but not juniors on average. The result measures meaningful workplace effects while underscoring that better assisted output is not automatic expertise transfer.",
+        "es": "En un ensayo aleatorizado de tres meses con 133 abogados de patentes de 11 bufetes, el acceso a IA mejoró la calidad de los borradores, mientras que las mejoras posteriores de criterio sin asistencia aparecieron entre los veteranos, pero no de media entre los principiantes. El resultado mide efectos laborales relevantes y subraya que una mejor producción asistida no transfiere experiencia automáticamente."
       }
     }
   ]
