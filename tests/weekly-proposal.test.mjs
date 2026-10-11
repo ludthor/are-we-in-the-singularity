@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   createPullRequestBody,
+  genuinelyNewDateBounds,
   validateWeeklyProposal,
 } from "../automation/validate-weekly-proposal.mjs";
 
@@ -101,6 +102,17 @@ function validProposal() {
   };
   return { previous, proposal };
 }
+
+test("computes the exact genuinely-new date interval", () => {
+  assert.deepEqual(genuinelyNewDateBounds("2026-08-03", "2026-08-10"), {
+    earliest: "2026-08-04",
+    latest: "2026-08-10",
+  });
+  assert.deepEqual(genuinelyNewDateBounds("2026-08-16", "2026-08-17"), {
+    earliest: "2026-08-17",
+    latest: "2026-08-17",
+  });
+});
 
 test("accepts one new development plus honest carryovers", () => {
   const { previous, proposal } = validProposal();

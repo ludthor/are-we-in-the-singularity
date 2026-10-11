@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "outcome": {
+      "type": "string",
+      "enum": ["proposal", "no_proposal"]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "shortage": {
+      "type": "string"
+    },
+    "candidateRejections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": ["url", "reason"]
+      }
+    },
+    "storyClassifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "publishedAt": {
+            "type": "string"
+          },
+          "classification": {
+            "type": "string",
+            "enum": ["new", "supporting", "carryover"]
+          }
+        },
+        "required": ["url", "publishedAt", "classification"]
+      }
+    }
+  },
+  "required": [
+    "outcome",
+    "summary",
+    "shortage",
+    "candidateRejections",
+    "storyClassifications"
+  ]
+}
