@@ -59,9 +59,9 @@ test("a merged current issue suppresses duplicates while a failed draft remains 
 });
 
 test("weekly release is head-locked, automatic, and deploys the merge commit", () => {
-  const secretGate = workflow.indexOf("Confirm release secrets are configured");
+  const preflight = workflow.indexOf("Check the published issue and retryable draft");
   const codex = workflow.indexOf("Run the bounded Codex editor");
-  assert.ok(secretGate !== -1 && secretGate < codex);
+  assert.ok(preflight !== -1 && preflight < codex);
   assert.match(workflow, /npm run build:pages/);
   assert.match(workflow, /gh pr ready "\$PR_URL"/);
   assert.match(workflow, /--match-head-commit "\$head_sha"/);
@@ -71,20 +71,45 @@ test("weekly release is head-locked, automatic, and deploys the merge commit", (
   assert.doesNotMatch(workflow, /--add-reviewer/);
 });
 
-test("Cloudflare deployment rebuilds and verifies the exact production commit", () => {
+test("GitHub Pages deployment rebuilds and verifies the exact production commit", () => {
   const checkout = deploymentWorkflow.indexOf("Check out the exact release commit");
   const install = deploymentWorkflow.indexOf("Install committed dependencies");
   const build = deploymentWorkflow.indexOf("Validate content and build the static export");
-  const deploy = deploymentWorkflow.indexOf("Deploy to the production Pages branch");
-  assert.ok(checkout !== -1 && checkout < install && install < build && build < deploy);
+  const upload = deploymentWorkflow.indexOf("Upload the GitHub Pages artifact");
+  const deploy = deploymentWorkflow.indexOf("Deploy the GitHub Pages artifact");
+  assert.ok(
+    checkout !== -1 &&
+      checkout < install &&
+      install < build &&
+      build < upload &&
+      upload < deploy,
+  );
   assert.match(deploymentWorkflow, /ref: \$\{\{ inputs\.commit_sha \|\| github\.sha \}\}/);
   assert.match(deploymentWorkflow, /npm run content:validate/);
   assert.match(deploymentWorkflow, /npm run build:pages/);
-  assert.match(deploymentWorkflow, /--project-name singularity-now/);
-  assert.match(deploymentWorkflow, /--branch main/);
-  assert.match(deploymentWorkflow, /https:\/\/singularity-now\.pages\.dev\/es\//);
+  assert.match(deploymentWorkflow, /pages: write/);
+  assert.match(deploymentWorkflow, /id-token: write/);
+  assert.match(deploymentWorkflow, /actions\/configure-pages@v5/);
+  assert.match(deploymentWorkflow, /actions\/upload-pages-artifact@v4/);
+  assert.match(deploymentWorkflow, /path: dist\/client/);
+  assert.match(deploymentWorkflow, /actions\/deploy-pages@v4/);
+  assert.match(deploymentWorkflow, /https:\/\/singularity\.ludthor\.es\/es\//);
   assert.match(deploymentWorkflow, /stories\[0\]\.href/);
   assert.match(deploymentWorkflow, /did not serve the expected weekly source/);
+});
+
+test("public workflows expose no hosting secret or fork-triggered paid path", () => {
+  assert.doesNotMatch(workflow, /^\s{2}pull_request(?:_target)?:/m);
+  assert.doesNotMatch(deploymentWorkflow, /^\s{2}pull_request(?:_target)?:/m);
+  assert.match(
+    workflow,
+    /openai-api-key: \$\{\{ secrets\.OPENAI_API_KEY \}\}/,
+  );
+  assert.doesNotMatch(deploymentWorkflow, /secrets\./);
+  assert.doesNotMatch(
+    `${workflow}\n${deploymentWorkflow}`,
+    /CLOUDFLARE_(?:ACCOUNT_ID|API_TOKEN)/,
+  );
 });
 
 test("failure signaling distinguishes deploy, publish, and propose failures", () => {

@@ -28,20 +28,6 @@ jobs:
       review_date: ${{ steps.check.outputs.review_date }}
       should_run: ${{ steps.check.outputs.should_run }}
     steps:
-      - name: Confirm release secrets are configured
-        env:
-          HAS_CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
-          HAS_CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
-        run: |
-          if [ "$HAS_CLOUDFLARE_ACCOUNT_ID" != "true" ]; then
-            echo "CLOUDFLARE_ACCOUNT_ID is missing from repository Actions secrets." >&2
-            exit 1
-          fi
-          if [ "$HAS_CLOUDFLARE_API_TOKEN" != "true" ]; then
-            echo "CLOUDFLARE_API_TOKEN is missing from repository Actions secrets." >&2
-            exit 1
-          fi
-
       - name: Check the published issue and retryable draft
         id: check
         uses: actions/github-script@v8
@@ -407,14 +393,6 @@ jobs:
           gh pr edit "$pr_url" --add-label weekly-review
           echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
 
-      - name: Confirm release secrets still exist
-        env:
-          HAS_CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
-          HAS_CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
-        run: |
-          test "$HAS_CLOUDFLARE_ACCOUNT_ID" = "true"
-          test "$HAS_CLOUDFLARE_API_TOKEN" = "true"
-
       - name: Mark ready and merge the validated head
         id: merge
         env:
@@ -436,19 +414,19 @@ jobs:
           echo "merge_sha=$merge_sha" >> "$GITHUB_OUTPUT"
 
   deploy:
-    name: Deploy the merged issue to Cloudflare Pages
+    name: Deploy the merged issue to GitHub Pages
     needs: publish
     if: needs.publish.result == 'success'
     permissions:
       contents: read
-      deployments: write
+      pages: write
+      id-token: write
       issues: write
     uses: ./.github/workflows/deploy-pages.yml
     with:
       commit_sha: ${{ needs.publish.outputs.merge_sha }}
       report_failure: false
       close_weekly_failure: true
-    secrets: inherit
 
   report-failure:
     name: Signal a failed weekly run
@@ -490,10 +468,10 @@ jobs:
             let rawDetail = process.env.FAILURE_DETAIL;
             if (process.env.PREFLIGHT_RESULT === "failure") {
               rawStage = "preflight";
-              rawDetail = "The workflow preflight failed while checking release credentials or the current publication state.";
+              rawDetail = "The workflow preflight failed while checking the current publication state.";
             } else if (process.env.DEPLOY_RESULT === "failure") {
               rawStage = "deploy";
-              rawDetail = "The weekly pull request was merged, but the exact merge commit could not be deployed to Cloudflare Pages.";
+              rawDetail = "The weekly pull request was merged, but the exact merge commit could not be deployed to GitHub Pages.";
             } else if (process.env.PUBLISH_RESULT === "failure") {
               rawStage = "publish";
               rawDetail = "The validated proposal could not be built, committed, opened, or merged as an audit pull request.";

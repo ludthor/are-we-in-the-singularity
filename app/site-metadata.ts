@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const DEFAULT_SITE_ORIGIN = "https://singularity-now.pages.dev";
+const DEFAULT_SITE_ORIGIN = "https://singularity.ludthor.es";
 
 function getSiteOrigin(): string {
   const configuredOrigin =
