@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 40,
-  "reviewedAt": "2026-10-09",
+  "issue": 41,
+  "reviewedAt": "2026-10-19",
   "verdict": "NO",
   "subtitle": {
-    "en": "Proofs, pocket models, and patent lawyers moved the needle. The needle remains stubbornly non-singular.",
-    "es": "Pruebas, modelos de bolsillo y abogados de patentes movieron la aguja. La aguja sigue obstinadamente no singular."
+    "en": "The agents reached the lab, the map, and the referee desk. The singularity remains out of office.",
+    "es": "Los agentes llegaron al laboratorio, al mapa y a la mesa del revisor. La singularidad sigue fuera de la oficina."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The sources show mathematical research, a more capable small model, and improved patent drafting. None demonstrates reliable best-human performance across most consequential domains.",
-        "es": "Las fuentes muestran investigación matemática, un modelo pequeño más capaz y mejores borradores de patentes. Ninguna demuestra un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
+        "en": "The sources show specialized laboratory control, document review, and geospatial analysis. They do not demonstrate reliable best-human performance across most consequential domains.",
+        "es": "Las fuentes muestran control especializado de laboratorio, revisión de documentos y análisis geoespacial. No demuestran un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
-      "status": "not_met",
+      "status": "partial",
       "evidenceSummary": {
-        "en": "OpenAI's model produced mathematical results, Anthropic released an engineered model, and Google's trial measured human learning. None shows an AI autonomously improving its own general capabilities in a closed loop.",
-        "es": "El modelo de OpenAI produjo resultados matemáticos, Anthropic lanzó un modelo diseñado y el ensayo de Google midió el aprendizaje humano. Ninguno muestra una IA mejorando autónomamente sus capacidades generales en un bucle cerrado."
+        "en": "Google reports closed-loop wet-lab cycles in which agents refine experiments from physical results. This is meaningful domain-specific feedback, not autonomous improvement of general capabilities.",
+        "es": "Google informa de ciclos de laboratorio cerrados en los que los agentes refinan experimentos a partir de resultados físicos. Es una retroalimentación relevante y específica del dominio, no una mejora autónoma de capacidades generales."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reports may lower research, inference, and professional-work costs, but they do not show AI-generated advances sustaining faster subsequent rounds without continued human direction and infrastructure.",
-        "es": "Los informes pueden reducir costes de investigación, inferencia y trabajo profesional, pero no muestran avances generados por IA que sostengan rondas posteriores más rápidas sin dirección humana e infraestructura continuas."
+        "en": "The new systems may speed bounded research and analysis workflows, but they do not show AI-generated advances sustaining faster subsequent rounds without continued human direction, equipment, and infrastructure.",
+        "es": "Los nuevos sistemas pueden acelerar flujos acotados de investigación y análisis, pero no muestran avances generados por IA que sostengan rondas posteriores más rápidas sin dirección humana, equipos e infraestructura continuos."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "New proofs, benchmark gains, and measured workplace effects are significant but remain quantifiable within ordinary technical and economic analysis; they do not establish a broken forecasting regime.",
-        "es": "Nuevas pruebas, mejoras en evaluaciones y efectos laborales medidos son importantes, pero siguen siendo cuantificables mediante análisis técnicos y económicos habituales; no establecen un régimen de predicción roto."
+        "en": "Laboratory demonstrations, document-review deployment, and geospatial benchmarks are consequential but remain measurable through ordinary technical and economic analysis; they do not establish a broken forecasting regime.",
+        "es": "Las demostraciones de laboratorio, el despliegue de revisión documental y las evaluaciones geoespaciales son relevantes, pero siguen siendo medibles mediante análisis técnicos y económicos habituales; no establecen un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
-      "publisher": "OpenAI",
-      "publishedAt": "2026-10-06",
-      "headline": {
-        "en": "OpenAI published new mathematical results produced by an internal frontier model",
-        "es": "OpenAI publicó nuevos resultados matemáticos producidos por un modelo de frontera interno"
-      },
-      "label": {
-        "en": "Proof, then review",
-        "es": "Prueba y después revisión"
-      },
-      "summary": {
-        "en": "OpenAI released a collection of mathematical results from an internal frontier model, with Lean formalizations for many proofs, reasoning summaries, attempt statistics, and compute estimates. The disclosure advances AI-assisted mathematics, but the results still require community scrutiny and do not show autonomous general self-improvement.",
-        "es": "OpenAI publicó una colección de resultados matemáticos de un modelo de frontera interno, con formalizaciones en Lean para muchas pruebas, resúmenes de razonamiento, estadísticas de intentos y estimaciones de cómputo. La publicación impulsa las matemáticas asistidas por IA, pero los resultados aún requieren escrutinio de la comunidad y no muestran auto-mejora general autónoma."
-      }
-    },
-    {
-      "href": "https://www.anthropic.com/claude-haiku-5-5",
-      "publisher": "Anthropic",
-      "publishedAt": "2026-10-07",
-      "headline": {
-        "en": "Anthropic released Claude Haiku 5.5 with large benchmark and cost gains",
-        "es": "Anthropic lanzó Claude Haiku 5.5 con grandes mejoras en evaluaciones y coste"
-      },
-      "label": {
-        "en": "Small model, larger résumé",
-        "es": "Modelo pequeño, currículum mayor"
-      },
-      "summary": {
-        "en": "Anthropic says Haiku 5.5 costs about 75% less to run than Haiku 4.5 while scoring 72.4% on an offline OSWorld subset and 39.2% on Terminal-Bench 4.0. The efficiency and capability gains broaden practical agent deployment, but benchmark performance remains bounded and below Anthropic's larger model.",
-        "es": "Anthropic afirma que ejecutar Haiku 5.5 cuesta cerca de un 75 % menos que Haiku 4.5, con un 72,4 % en un subconjunto sin conexión de OSWorld y un 39,2 % en Terminal-Bench 4.0. Las mejoras de eficiencia y capacidad amplían el despliegue práctico de agentes, pero el rendimiento sigue acotado y por debajo del modelo mayor de Anthropic."
-      }
-    },
-    {
-      "href": "https://research.google/blog/does-better-work-always-mean-better-workers/",
+      "href": "https://research.google/blog/grounding-ai-agents-in-biological-reality-building-blocks-for-autonomous-wet-labs/",
       "publisher": "Google Research",
-      "publishedAt": "2026-10-07",
+      "publishedAt": "2026-10-16",
       "headline": {
-        "en": "Google Research found AI improved patent drafting but not every lawyer's judgment",
-        "es": "Google Research observó que la IA mejoró las patentes, pero no el criterio de todos los abogados"
+        "en": "Google Research demonstrated building blocks for autonomous wet-lab agents",
+        "es": "Google Research demostró componentes básicos para agentes autónomos de laboratorio"
       },
       "label": {
-        "en": "The apprentice clause",
-        "es": "La cláusula del aprendiz"
+        "en": "The pipette has a planner",
+        "es": "La pipeta ya tiene planificador"
       },
       "summary": {
-        "en": "In a three-month randomized trial with 133 patent lawyers at 11 firms, AI access improved drafting quality, while later unassisted judgment gains appeared among senior lawyers but not juniors on average. The result measures meaningful workplace effects while underscoring that better assisted output is not automatic expertise transfer.",
-        "es": "En un ensayo aleatorizado de tres meses con 133 abogados de patentes de 11 bufetes, el acceso a IA mejoró la calidad de los borradores, mientras que las mejoras posteriores de criterio sin asistencia aparecieron entre los veteranos, pero no de media entre los principiantes. El resultado mide efectos laborales relevantes y subraya que una mejor producción asistida no transfiere experiencia automáticamente."
+        "en": "Google Research describes VERID, a stateful digital twin that lets agents simulate and safely execute liquid-handling protocols, plus closed-loop prototypes for aptamer and protein design. The work connects AI plans to physical experiments, but it remains specialized, robot-dependent, and directed by human scientific agency.",
+        "es": "Google Research describe VERID, un gemelo digital con estado que permite a los agentes simular y ejecutar con seguridad protocolos de manipulación de líquidos, además de prototipos cerrados para diseñar aptámeros y proteínas. El trabajo conecta planes de IA con experimentos físicos, pero sigue siendo especializado, dependiente de robots y dirigido por la agencia científica humana."
+      }
+    },
+    {
+      "href": "https://research.google/blog/analyzing-technical-documents-with-deep-review/",
+      "publisher": "Google Research",
+      "publishedAt": "2026-10-14",
+      "headline": {
+        "en": "Google Research publicly launched Deep Review for technical-document analysis",
+        "es": "Google Research lanzó públicamente Deep Review para analizar documentos técnicos"
+      },
+      "label": {
+        "en": "A second pair of brackets",
+        "es": "Un segundo par de corchetes"
+      },
+      "summary": {
+        "en": "Google Research released Deep Review after pilots covering more than 16,000 opt-in submissions at four computer-science conferences. The agentic system gives grounded feedback and technical verification for documents, initially including PDFs and plain text, but it assists human review rather than replacing broad expert judgment.",
+        "es": "Google Research lanzó Deep Review tras pilotos con más de 16.000 envíos voluntarios en cuatro conferencias de informática. El sistema agente ofrece comentarios fundamentados y verificación técnica para documentos, inicialmente PDF y texto sin formato, pero asiste a la revisión humana en vez de sustituir el criterio experto general."
+      }
+    },
+    {
+      "href": "https://research.google/blog/putting-earth-ai-to-work-geospatial-agents-for-our-planets-biggest-challenges/",
+      "publisher": "Google Research",
+      "publishedAt": "2026-10-14",
+      "headline": {
+        "en": "Google Research expanded early access to its Geospatial Reasoning agent",
+        "es": "Google Research amplió el acceso temprano a su agente de razonamiento geoespacial"
+      },
+      "label": {
+        "en": "Atlas, now with tools",
+        "es": "Atlas, ahora con herramientas"
+      },
+      "summary": {
+        "en": "Google Research published a technical report and expanded experimental access to a Geospatial Reasoning agent that combines Earth AI models, spatial tools, and upfront planning. It reports evaluations on four benchmarks and partner testing for tasks such as outbreaks and disaster preparedness, while remaining an early, domain-bound system.",
+        "es": "Google Research publicó un informe técnico y amplió el acceso experimental a un agente de razonamiento geoespacial que combina modelos Earth AI, herramientas espaciales y planificación previa. Informa de evaluaciones en cuatro pruebas y de ensayos con socios para tareas como brotes y preparación ante desastres, aunque sigue siendo un sistema temprano y acotado al dominio."
       }
     }
   ]
