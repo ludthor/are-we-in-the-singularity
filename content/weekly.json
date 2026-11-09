@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 43,
-  "reviewedAt": "2026-11-02",
+  "issue": 44,
+  "reviewedAt": "2026-11-09",
   "verdict": "NO",
   "subtitle": {
-    "en": "The lab work accelerated, the chips found their countries, and the patch window acquired a weather report.",
-    "es": "El trabajo de laboratorio se aceleró, los chips encontraron sus países y la ventana de parches ya tiene parte meteorológico."
+    "en": "The protein acquired a floor plan, the TPUs doubled, and Inner Mongolia got a very large spreadsheet.",
+    "es": "La proteína consiguió plano, las TPU se duplicaron y Mongolia Interior recibió una hoja de cálculo muy grande."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The sources show useful work in drug development, infrastructure measurement, and a bounded security experiment. They do not establish reliable best-human performance across most consequential domains.",
-        "es": "Las fuentes muestran trabajo útil en desarrollo de fármacos, medición de infraestructura y un experimento de seguridad acotado. No establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
+        "en": "The sources document a biology result and infrastructure estimates. They do not establish reliable best-human performance across most consequential domains.",
+        "es": "Las fuentes documentan un resultado de biología y estimaciones de infraestructura. No establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reports describe models assisting research and a controlled security experiment. They do not show a system using feedback to autonomously improve its own general capabilities.",
-        "es": "Los informes describen modelos que ayudan en investigación y un experimento de seguridad controlado. No muestran un sistema que use retroalimentación para mejorar autónomamente sus propias capacidades generales."
+        "en": "Claude assisted a directed biology workflow, while the other sources measure compute infrastructure. None shows feedback autonomously improving a system's general capabilities.",
+        "es": "Claude ayudó en un flujo de biología dirigido, mientras las otras fuentes miden infraestructura de cómputo. Ninguna muestra retroalimentación que mejore autónomamente las capacidades generales de un sistema."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Claude-assisted workflows could speed parts of drug development, but the sources do not show AI-generated advances sustaining faster subsequent rounds without continued human oversight, labs, and infrastructure.",
-        "es": "Los flujos asistidos por Claude podrían acelerar partes del desarrollo de fármacos, pero las fuentes no muestran avances generados por IA que sostengan rondas posteriores más rápidas sin supervisión humana, laboratorios e infraestructura continuos."
+        "en": "The vault workflow may shorten a laboratory step, and TPU supply is growing, but neither constitutes AI-driven advances sustaining faster subsequent rounds without people, labs, and infrastructure.",
+        "es": "El flujo de vaults puede acortar un paso de laboratorio y crece el suministro de TPU, pero ninguno constituye avances impulsados por IA que sostengan rondas posteriores más rápidas sin personas, laboratorios e infraestructura."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The findings are consequential but remain bounded, documented, and amenable to ordinary technical, security, and economic analysis; they do not establish a broken forecasting regime.",
-        "es": "Los hallazgos son relevantes, pero siguen siendo acotados, documentados y analizables con métodos técnicos, de seguridad y económicos habituales; no establecen un régimen de predicción roto."
+        "en": "The findings are consequential but bounded, documented, and amenable to ordinary scientific and infrastructure analysis; they do not establish a broken forecasting regime.",
+        "es": "Los hallazgos son relevantes, pero son acotados, documentados y analizables con métodos científicos y de infraestructura habituales; no establecen un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://www.anthropic.com/research/early-progress-drug-development",
+      "href": "https://www.anthropic.com/research/investigating-vault-particles-with-claude",
       "publisher": "Anthropic",
-      "publishedAt": "2026-10-27",
+      "publishedAt": "2026-11-04",
       "headline": {
-        "en": "Anthropic reported early Claude-assisted drug-development work",
-        "es": "Anthropic informó de trabajo inicial de desarrollo de fármacos asistido por Claude"
+        "en": "Anthropic reported a prokaryotic vault-particle structure investigated with Claude",
+        "es": "Anthropic informó de una estructura de partícula vault procariota investigada con Claude"
       },
       "label": {
-        "en": "Pipettes meet prompts",
-        "es": "Pipetas y prompts"
+        "en": "A vault with a blueprint",
+        "es": "Un vault con plano"
       },
       "summary": {
-        "en": "Anthropic reports work with six drug-development organizations and its own early programs, describing Claude-assisted research, design, and operational tasks. The examples are largely preclinical and involve scientists, laboratories, and partner workflows; they are progress in a specific field, not evidence of general autonomous research.",
-        "es": "Anthropic informa de trabajo con seis organizaciones de desarrollo de fármacos y programas propios iniciales, con tareas de investigación, diseño y operación asistidas por Claude. Los ejemplos son en gran parte preclínicos e involucran científicos, laboratorios y flujos de socios; son avances en un campo específico, no evidencia de investigación autónoma general."
+        "en": "Anthropic reports the first 3D structure of a vault particle in prokaryotic cells. Its researchers used Claude in a directed workflow for literature and protein-database searches, DNA constructs, purification optimization, and microscopy processing. The result is a field-specific, human-led biology project, not general autonomous research.",
+        "es": "Anthropic informa de la primera estructura 3D de una partícula vault en células procariotas. Sus investigadores usaron Claude en un flujo dirigido para búsquedas bibliográficas y en bases de datos de proteínas, constructos de ADN, optimización de purificación y procesamiento de microscopía. El resultado es un proyecto de biología específico y dirigido por humanos, no investigación autónoma general."
       }
     },
     {
-      "href": "https://www.epoch.ai/latest/introducing-the-ai-chip-imports-explorer",
+      "href": "https://epoch.ai/data-insights/tpu-production-doubling",
       "publisher": "Epoch AI",
-      "publishedAt": "2026-10-27",
+      "publishedAt": "2026-11-04",
       "headline": {
-        "en": "Epoch AI launched an explorer measuring destinations for AI-compute imports",
-        "es": "Epoch AI lanzó un explorador que mide los destinos de las importaciones de cómputo para IA"
+        "en": "Epoch AI estimated Broadcom TPU compute shipments doubled in Q3 2026",
+        "es": "Epoch AI estimó que los envíos de cómputo TPU de Broadcom se duplicaron en el tercer trimestre de 2026"
       },
       "label": {
-        "en": "Compute gets a passport stamp",
-        "es": "El cómputo recibe sello de pasaporte"
+        "en": "Accelerators hit the gas",
+        "es": "Los aceleradores pisan el gas"
       },
       "summary": {
-        "en": "Epoch AI released a customs-record-based explorer estimating national destinations for AI chips. It estimates that 72% of AI compute arriving from 2022 through June 2026 went to the United States and about 10% to China, including Chinese domestic production. It is a documented infrastructure estimate, not a measure of model capability or autonomy.",
-        "es": "Epoch AI publicó un explorador basado en registros aduaneros que estima los destinos nacionales de chips para IA. Estima que el 72% del cómputo de IA llegado entre 2022 y junio de 2026 fue a Estados Unidos y cerca del 10% a China, incluida la producción china nacional. Es una estimación documentada de infraestructura, no una medida de capacidad ni autonomía de modelos."
+        "en": "Epoch AI estimates Broadcom's TPU compute shipments reached nearly 2 million H100-equivalents in fiscal Q3 2026, roughly twice Q2, with about 800,000 chips shipped. It attributes the increase to both higher volume and a mix shift toward more powerful TPUs. This is an infrastructure estimate, not a measurement of model capability or autonomy.",
+        "es": "Epoch AI estima que los envíos de cómputo TPU de Broadcom alcanzaron casi 2 millones de equivalentes H100 en el tercer trimestre fiscal de 2026, aproximadamente el doble que en el segundo, con unos 800.000 chips enviados. Atribuye el aumento tanto a mayor volumen como a un cambio hacia TPU más potentes. Es una estimación de infraestructura, no una medición de capacidad ni autonomía de modelos."
       }
     },
     {
-      "href": "https://www.epoch.ai/publications/open-weight-models-patch-gap",
+      "href": "https://www.epoch.ai/publications/huawei-horinger-china-compute-gap",
       "publisher": "Epoch AI",
-      "publishedAt": "2026-10-29",
+      "publishedAt": "2026-11-06",
       "headline": {
-        "en": "Epoch AI tested an open-weight model against the software patch gap",
-        "es": "Epoch AI probó un modelo de pesos abiertos frente a la brecha de parches de software"
+        "en": "Epoch AI assessed Huawei's Horinger facility against frontier AI-compute infrastructure",
+        "es": "Epoch AI evaluó la instalación de Huawei en Horinger frente a la infraestructura de cómputo de IA de frontera"
       },
       "label": {
-        "en": "The update window got shorter",
-        "es": "La ventana de actualización se acortó"
+        "en": "A data center gets a tape measure",
+        "es": "Un centro de datos pasa por la cinta métrica"
       },
       "summary": {
-        "en": "Epoch AI reports that, in controlled experiments, an open-weight model converted published but unshipped Firefox security fixes into working exploits for six releases at roughly $1,000 each. The result concerns a specific patch gap and model setup; it is a material security finding, not evidence of general agency or self-improvement.",
-        "es": "Epoch AI informa de que, en experimentos controlados, un modelo de pesos abiertos convirtió correcciones de seguridad de Firefox publicadas pero aún no distribuidas en exploits funcionales para seis versiones, por unos 1.000 dólares cada una. El resultado se refiere a una brecha de parches y configuración concretas; es un hallazgo relevante de seguridad, no evidencia de agencia general ni auto-mejora."
+        "en": "Using satellite imagery and public sources, Epoch AI estimates up to 286 MW of IT power capacity at Huawei's Horinger campus and AI compute at 7% of the world's largest AI data center, Colossus 2. It also projects 70% more computing power there by early 2028. These are documented infrastructure estimates, not evidence of model capability or autonomy.",
+        "es": "Mediante imágenes satelitales y fuentes públicas, Epoch AI estima hasta 286 MW de capacidad eléctrica de TI en el campus Horinger de Huawei y cómputo de IA equivalente al 7% del mayor centro de datos de IA del mundo, Colossus 2. También proyecta allí un 70% más de capacidad de cómputo a comienzos de 2028. Son estimaciones documentadas de infraestructura, no evidencia de capacidad ni autonomía de modelos."
       }
     }
   ]
