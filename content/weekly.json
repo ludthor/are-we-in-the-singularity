@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 44,
-  "reviewedAt": "2026-11-09",
+  "issue": 45,
+  "reviewedAt": "2026-11-16",
   "verdict": "NO",
   "subtitle": {
-    "en": "The protein acquired a floor plan, the TPUs doubled, and Inner Mongolia got a very large spreadsheet.",
-    "es": "La proteína consiguió plano, las TPU se duplicaron y Mongolia Interior recibió una hoja de cálculo muy grande."
+    "en": "The robots gained dexterity, the proofs gained bulk, and DNA got another very attentive reader.",
+    "es": "Los robots ganaron destreza, las pruebas ganaron volumen y el ADN consiguió otro lector muy atento."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The sources document a biology result and infrastructure estimates. They do not establish reliable best-human performance across most consequential domains.",
-        "es": "Las fuentes documentan un resultado de biología y estimaciones de infraestructura. No establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
+        "en": "The reports cover robot manipulation, formal software verification, and genomic prediction. They do not establish reliable best-human performance across most consequential domains.",
+        "es": "Los informes tratan de manipulación robótica, verificación formal de software y predicción genómica. No establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Claude assisted a directed biology workflow, while the other sources measure compute infrastructure. None shows feedback autonomously improving a system's general capabilities.",
-        "es": "Claude ayudó en un flujo de biología dirigido, mientras las otras fuentes miden infraestructura de cómputo. Ninguna muestra retroalimentación que mejore autónomamente las capacidades generales de un sistema."
+        "en": "The systems perform bounded tasks and report results, but the sources do not show an autonomous feedback loop that improves a system's general capabilities.",
+        "es": "Los sistemas realizan tareas acotadas e informan resultados, pero las fuentes no muestran un bucle autónomo de retroalimentación que mejore las capacidades generales de un sistema."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The vault workflow may shorten a laboratory step, and TPU supply is growing, but neither constitutes AI-driven advances sustaining faster subsequent rounds without people, labs, and infrastructure.",
-        "es": "El flujo de vaults puede acortar un paso de laboratorio y crece el suministro de TPU, pero ninguno constituye avances impulsados por IA que sostengan rondas posteriores más rápidas sin personas, laboratorios e infraestructura."
+        "en": "Robotics, proof generation, and genomic modeling may aid specific workflows, but none demonstrates AI-driven advances sustaining faster subsequent rounds without human-led research and infrastructure.",
+        "es": "La robótica, la generación de pruebas y el modelado genómico pueden ayudar a flujos concretos, pero ninguno demuestra avances impulsados por IA que sostengan rondas posteriores más rápidas sin investigación e infraestructura dirigidas por humanos."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The findings are consequential but bounded, documented, and amenable to ordinary scientific and infrastructure analysis; they do not establish a broken forecasting regime.",
-        "es": "Los hallazgos son relevantes, pero son acotados, documentados y analizables con métodos científicos y de infraestructura habituales; no establecen un régimen de predicción roto."
+        "en": "These are consequential, documented advances in specialized systems. Their capabilities and limits remain amenable to ordinary technical evaluation and do not establish a broken forecasting regime.",
+        "es": "Son avances relevantes y documentados en sistemas especializados. Sus capacidades y límites siguen siendo analizables mediante evaluación técnica habitual y no establecen un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://www.anthropic.com/research/investigating-vault-particles-with-claude",
-      "publisher": "Anthropic",
-      "publishedAt": "2026-11-04",
+      "href": "https://deepmind.google/blog/gemini-robotics-2-5-accelerates-real-world-physical-intelligence/",
+      "publisher": "Google DeepMind",
+      "publishedAt": "2026-11-10",
       "headline": {
-        "en": "Anthropic reported a prokaryotic vault-particle structure investigated with Claude",
-        "es": "Anthropic informó de una estructura de partícula vault procariota investigada con Claude"
+        "en": "Google DeepMind introduced Gemini Robotics 2.5 for real-world robot dexterity",
+        "es": "Google DeepMind presentó Gemini Robotics 2.5 para la destreza robótica en el mundo real"
       },
       "label": {
-        "en": "A vault with a blueprint",
-        "es": "Un vault con plano"
+        "en": "Hands get an upgrade",
+        "es": "Manos mejoradas"
       },
       "summary": {
-        "en": "Anthropic reports the first 3D structure of a vault particle in prokaryotic cells. Its researchers used Claude in a directed workflow for literature and protein-database searches, DNA constructs, purification optimization, and microscopy processing. The result is a field-specific, human-led biology project, not general autonomous research.",
-        "es": "Anthropic informa de la primera estructura 3D de una partícula vault en células procariotas. Sus investigadores usaron Claude en un flujo dirigido para búsquedas bibliográficas y en bases de datos de proteínas, constructos de ADN, optimización de purificación y procesamiento de microscopía. El resultado es un proyecto de biología específico y dirigido por humanos, no investigación autónoma general."
+        "en": "Google DeepMind introduced Gemini Robotics 2.5, a vision-language-action model it describes as its most capable for physical tasks. The announcement emphasizes improved dexterity, reliability, and safety in real-world environments. It is a specialized robotics system, not evidence of general autonomous capability or self-improvement.",
+        "es": "Google DeepMind presentó Gemini Robotics 2.5, un modelo de visión, lenguaje y acción que describe como su más capaz para tareas físicas. El anuncio destaca mejoras en destreza, fiabilidad y seguridad en entornos reales. Es un sistema robótico especializado, no evidencia de capacidad autónoma general ni de auto-mejora."
       }
     },
     {
-      "href": "https://epoch.ai/data-insights/tpu-production-doubling",
-      "publisher": "Epoch AI",
-      "publishedAt": "2026-11-04",
+      "href": "https://deepmind.google/blog/introducing-alphaproof-code/",
+      "publisher": "Google DeepMind",
+      "publishedAt": "2026-11-10",
       "headline": {
-        "en": "Epoch AI estimated Broadcom TPU compute shipments doubled in Q3 2026",
-        "es": "Epoch AI estimó que los envíos de cómputo TPU de Broadcom se duplicaron en el tercer trimestre de 2026"
+        "en": "Google DeepMind reported AlphaProof Code agents verified Signal's cryptographic protections",
+        "es": "Google DeepMind informó de que agentes AlphaProof Code verificaron las protecciones criptográficas de Signal"
       },
       "label": {
-        "en": "Accelerators hit the gas",
-        "es": "Los aceleradores pisan el gas"
+        "en": "Proofs at industrial scale",
+        "es": "Pruebas a escala industrial"
       },
       "summary": {
-        "en": "Epoch AI estimates Broadcom's TPU compute shipments reached nearly 2 million H100-equivalents in fiscal Q3 2026, roughly twice Q2, with about 800,000 chips shipped. It attributes the increase to both higher volume and a mix shift toward more powerful TPUs. This is an infrastructure estimate, not a measurement of model capability or autonomy.",
-        "es": "Epoch AI estima que los envíos de cómputo TPU de Broadcom alcanzaron casi 2 millones de equivalentes H100 en el tercer trimestre fiscal de 2026, aproximadamente el doble que en el segundo, con unos 800.000 chips enviados. Atribuye el aumento tanto a mayor volumen como a un cambio hacia TPU más potentes. Es una estimación de infraestructura, no una medición de capacidad ni autonomía de modelos."
+        "en": "Google DeepMind says AlphaProof Code agents wrote more than three million lines of machine-checked Lean proof to verify Signal's core cryptographic protections down to machine instructions. The reported result is substantial formal verification in a defined codebase, not a demonstration of broad autonomous software engineering or recursive improvement.",
+        "es": "Google DeepMind afirma que agentes AlphaProof Code escribieron más de tres millones de líneas de prueba Lean verificadas por máquina para comprobar las protecciones criptográficas centrales de Signal hasta las instrucciones de máquina. El resultado informado es una verificación formal sustancial en una base de código definida, no una demostración de ingeniería de software autónoma amplia ni de mejora recursiva."
       }
     },
     {
-      "href": "https://www.epoch.ai/publications/huawei-horinger-china-compute-gap",
-      "publisher": "Epoch AI",
-      "publishedAt": "2026-11-06",
+      "href": "https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/",
+      "publisher": "Google DeepMind",
+      "publishedAt": "2026-11-11",
       "headline": {
-        "en": "Epoch AI assessed Huawei's Horinger facility against frontier AI-compute infrastructure",
-        "es": "Epoch AI evaluó la instalación de Huawei en Horinger frente a la infraestructura de cómputo de IA de frontera"
+        "en": "Google DeepMind introduced AlphaGenome 2 for predicting DNA-variant effects by cell type",
+        "es": "Google DeepMind presentó AlphaGenome 2 para predecir efectos de variantes de ADN según el tipo celular"
       },
       "label": {
-        "en": "A data center gets a tape measure",
-        "es": "Un centro de datos pasa por la cinta métrica"
+        "en": "DNA gets a close read",
+        "es": "El ADN se lee de cerca"
       },
       "summary": {
-        "en": "Using satellite imagery and public sources, Epoch AI estimates up to 286 MW of IT power capacity at Huawei's Horinger campus and AI compute at 7% of the world's largest AI data center, Colossus 2. It also projects 70% more computing power there by early 2028. These are documented infrastructure estimates, not evidence of model capability or autonomy.",
-        "es": "Mediante imágenes satelitales y fuentes públicas, Epoch AI estima hasta 286 MW de capacidad eléctrica de TI en el campus Horinger de Huawei y cómputo de IA equivalente al 7% del mayor centro de datos de IA del mundo, Colossus 2. También proyecta allí un 70% más de capacidad de cómputo a comienzos de 2028. Son estimaciones documentadas de infraestructura, no evidencia de capacidad ni autonomía de modelos."
+        "en": "Google DeepMind introduced AlphaGenome 2, a DNA-sequence model that connects single-cell biology and human genetics to predict how variants affect human cell types. The work targets a valuable scientific prediction problem, but remains a domain-specific model rather than evidence of general autonomy or self-sustaining acceleration.",
+        "es": "Google DeepMind presentó AlphaGenome 2, un modelo de secuencias de ADN que conecta biología de célula única y genética humana para predecir cómo las variantes afectan a tipos de células humanas. El trabajo aborda un valioso problema científico de predicción, pero sigue siendo un modelo específico de un ámbito, no evidencia de autonomía general ni de aceleración autosostenida."
       }
     }
   ]
