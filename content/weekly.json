@@ -1,96 +1,96 @@
 {
   "schemaVersion": 1,
-  "issue": 45,
-  "reviewedAt": "2026-11-16",
+  "issue": 46,
+  "reviewedAt": "2026-11-23",
   "verdict": "NO",
   "subtitle": {
-    "en": "The robots gained dexterity, the proofs gained bulk, and DNA got another very attentive reader.",
-    "es": "Los robots ganaron destreza, las pruebas ganaron volumen y el ADN consiguió otro lector muy atento."
+    "en": "The chips got optimization, the molecules got a quiz, and the phone acquired a colleague.",
+    "es": "Los chips recibieron optimización, las moléculas un examen y el teléfono un compañero de trabajo."
   },
   "criteria": [
     {
       "id": "superhuman-generality",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The reports cover robot manipulation, formal software verification, and genomic prediction. They do not establish reliable best-human performance across most consequential domains.",
-        "es": "Los informes tratan de manipulación robótica, verificación formal de software y predicción genómica. No establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
+        "en": "The sources cover chip optimization, medicinal-chemistry evaluation, and automated business calls. They do not establish reliable best-human performance across most consequential domains.",
+        "es": "Las fuentes tratan de optimización de chips, evaluación de química medicinal y llamadas automatizadas a empresas. No establecen un rendimiento fiable al nivel de los mejores humanos en la mayoría de ámbitos relevantes."
       }
     },
     {
       "id": "closed-loop-improvement",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "The systems perform bounded tasks and report results, but the sources do not show an autonomous feedback loop that improves a system's general capabilities.",
-        "es": "Los sistemas realizan tareas acotadas e informan resultados, pero las fuentes no muestran un bucle autónomo de retroalimentación que mejore las capacidades generales de un sistema."
+        "en": "The sources describe bounded design, evaluation, and calling tasks, but not an autonomous feedback loop that improves a system's general capabilities.",
+        "es": "Las fuentes describen tareas acotadas de diseño, evaluación y llamadas, pero no un bucle autónomo de retroalimentación que mejore las capacidades generales de un sistema."
       }
     },
     {
       "id": "self-sustaining-acceleration",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "Robotics, proof generation, and genomic modeling may aid specific workflows, but none demonstrates AI-driven advances sustaining faster subsequent rounds without human-led research and infrastructure.",
-        "es": "La robótica, la generación de pruebas y el modelado genómico pueden ayudar a flujos concretos, pero ninguno demuestra avances impulsados por IA que sostengan rondas posteriores más rápidas sin investigación e infraestructura dirigidas por humanos."
+        "en": "Chip design, chemistry benchmarks, and business calling may aid particular workflows, but none demonstrates AI-driven advances sustaining faster subsequent rounds without human-led research and infrastructure.",
+        "es": "El diseño de chips, las pruebas de química y las llamadas a empresas pueden ayudar a flujos concretos, pero ninguno demuestra avances de IA que sostengan rondas posteriores más rápidas sin investigación e infraestructura dirigidas por humanos."
       }
     },
     {
       "id": "forecasting-regime-broken",
       "status": "not_met",
       "evidenceSummary": {
-        "en": "These are consequential, documented advances in specialized systems. Their capabilities and limits remain amenable to ordinary technical evaluation and do not establish a broken forecasting regime.",
-        "es": "Son avances relevantes y documentados en sistemas especializados. Sus capacidades y límites siguen siendo analizables mediante evaluación técnica habitual y no establecen un régimen de predicción roto."
+        "en": "These are documented advances in specialized systems. Their capabilities and limits remain amenable to ordinary technical evaluation and do not establish a broken forecasting regime.",
+        "es": "Son avances documentados en sistemas especializados. Sus capacidades y límites siguen siendo analizables mediante evaluación técnica habitual y no establecen un régimen de predicción roto."
       }
     }
   ],
   "stories": [
     {
-      "href": "https://deepmind.google/blog/gemini-robotics-2-5-accelerates-real-world-physical-intelligence/",
-      "publisher": "Google DeepMind",
-      "publishedAt": "2026-11-10",
+      "href": "https://openai.com/index/advancing-chip-design-with-our-models/",
+      "publisher": "OpenAI",
+      "publishedAt": "2026-11-18",
       "headline": {
-        "en": "Google DeepMind introduced Gemini Robotics 2.5 for real-world robot dexterity",
-        "es": "Google DeepMind presentó Gemini Robotics 2.5 para la destreza robótica en el mundo real"
+        "en": "OpenAI reported model-assisted optimization of chip circuits and RISC-V designs",
+        "es": "OpenAI informó de optimización asistida por modelos de circuitos de chips y diseños RISC-V"
       },
       "label": {
-        "en": "Hands get an upgrade",
-        "es": "Manos mejoradas"
+        "en": "Silicon gets help",
+        "es": "Silicio con ayuda"
       },
       "summary": {
-        "en": "Google DeepMind introduced Gemini Robotics 2.5, a vision-language-action model it describes as its most capable for physical tasks. The announcement emphasizes improved dexterity, reliability, and safety in real-world environments. It is a specialized robotics system, not evidence of general autonomous capability or self-improvement.",
-        "es": "Google DeepMind presentó Gemini Robotics 2.5, un modelo de visión, lenguaje y acción que describe como su más capaz para tareas físicas. El anuncio destaca mejoras en destreza, fiabilidad y seguridad en entornos reales. Es un sistema robótico especializado, no evidencia de capacidad autónoma general ni de auto-mejora."
+        "en": "OpenAI reports that its models optimized compute circuits used in Jalapeño silicon and improved RISC-V core designs, including work with AMD. The reported applications are specific engineering tasks, not evidence of broad autonomous engineering or recursive self-improvement.",
+        "es": "OpenAI informa de que sus modelos optimizaron circuitos de cálculo usados en silicio Jalapeño y mejoraron diseños de núcleos RISC-V, incluido trabajo con AMD. Las aplicaciones descritas son tareas de ingeniería específicas, no evidencia de ingeniería autónoma amplia ni de mejora recursiva."
       }
     },
     {
-      "href": "https://deepmind.google/blog/introducing-alphaproof-code/",
-      "publisher": "Google DeepMind",
-      "publishedAt": "2026-11-10",
+      "href": "https://openai.com/index/introducing-medchembench/",
+      "publisher": "OpenAI",
+      "publishedAt": "2026-11-20",
       "headline": {
-        "en": "Google DeepMind reported AlphaProof Code agents verified Signal's cryptographic protections",
-        "es": "Google DeepMind informó de que agentes AlphaProof Code verificaron las protecciones criptográficas de Signal"
+        "en": "OpenAI released MedChemBench to evaluate AI on medicinal-chemistry tasks",
+        "es": "OpenAI publicó MedChemBench para evaluar IA en tareas de química medicinal"
       },
       "label": {
-        "en": "Proofs at industrial scale",
-        "es": "Pruebas a escala industrial"
+        "en": "Molecules take a test",
+        "es": "Examen para moléculas"
       },
       "summary": {
-        "en": "Google DeepMind says AlphaProof Code agents wrote more than three million lines of machine-checked Lean proof to verify Signal's core cryptographic protections down to machine instructions. The reported result is substantial formal verification in a defined codebase, not a demonstration of broad autonomous software engineering or recursive improvement.",
-        "es": "Google DeepMind afirma que agentes AlphaProof Code escribieron más de tres millones de líneas de prueba Lean verificadas por máquina para comprobar las protecciones criptográficas centrales de Signal hasta las instrucciones de máquina. El resultado informado es una verificación formal sustancial en una base de código definida, no una demostración de ingeniería de software autónoma amplia ni de mejora recursiva."
+        "en": "OpenAI introduced MedChemBench, a benchmark for reading molecular structures, interpreting experimental results, and choosing compounds to test in early drug discovery. It measures performance on a defined scientific domain; it does not show general autonomy or self-sustaining acceleration.",
+        "es": "OpenAI presentó MedChemBench, un referente para leer estructuras moleculares, interpretar resultados experimentales y elegir compuestos que probar en descubrimiento temprano de fármacos. Mide rendimiento en un ámbito científico definido; no muestra autonomía general ni aceleración autosostenida."
       }
     },
     {
-      "href": "https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/",
-      "publisher": "Google DeepMind",
-      "publishedAt": "2026-11-11",
+      "href": "https://research.google/blog/how-google-duplex-evolved-to-also-call-businesses-for-you-in-gemini/",
+      "publisher": "Google Research",
+      "publishedAt": "2026-11-20",
       "headline": {
-        "en": "Google DeepMind introduced AlphaGenome 2 for predicting DNA-variant effects by cell type",
-        "es": "Google DeepMind presentó AlphaGenome 2 para predecir efectos de variantes de ADN según el tipo celular"
+        "en": "Google Research described Gemini using Duplex to call businesses for users",
+        "es": "Google Research describió cómo Gemini usa Duplex para llamar a empresas por los usuarios"
       },
       "label": {
-        "en": "DNA gets a close read",
-        "es": "El ADN se lee de cerca"
+        "en": "The phone joins in",
+        "es": "El teléfono se suma"
       },
       "summary": {
-        "en": "Google DeepMind introduced AlphaGenome 2, a DNA-sequence model that connects single-cell biology and human genetics to predict how variants affect human cell types. The work targets a valuable scientific prediction problem, but remains a domain-specific model rather than evidence of general autonomy or self-sustaining acceleration.",
-        "es": "Google DeepMind presentó AlphaGenome 2, un modelo de secuencias de ADN que conecta biología de célula única y genética humana para predecir cómo las variantes afectan a tipos de células humanas. El trabajo aborda un valioso problema científico de predicción, pero sigue siendo un modelo específico de un ámbito, no evidencia de autonomía general ni de aceleración autosostenida."
+        "en": "Google Research described a Gemini capability that uses Google Duplex to call local businesses, ask questions, and relay answers for users. It extends a constrained consumer-assistance workflow, not an independently operating general agent or self-improving system.",
+        "es": "Google Research describió una capacidad de Gemini que usa Google Duplex para llamar a comercios locales, hacer preguntas y transmitir respuestas a los usuarios. Amplía un flujo de ayuda al consumidor acotado, no un agente general que opere de forma independiente ni un sistema que se auto-mejore."
       }
     }
   ]
